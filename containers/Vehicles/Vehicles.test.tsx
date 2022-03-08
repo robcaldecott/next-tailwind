@@ -1,27 +1,9 @@
-import {
-  vi,
-  describe,
-  it,
-  expect,
-  beforeAll,
-  beforeEach,
-  afterEach,
-  afterAll,
-} from "vitest";
+import { describe, it, expect } from "vitest";
 import { screen, render, within, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { FilterProvider } from "@/providers";
 import { Vehicles } from "./Vehicles";
-
-const replace = vi.fn();
-
-vi.mock("next/router", () => ({
-  useRouter: () => ({ replace }),
-}));
 
 describe("Vehicles", () => {
   const vehicles = [
@@ -39,46 +21,20 @@ describe("Vehicles", () => {
     },
   ];
 
-  const server = setupServer();
-
-  beforeAll(() => server.listen());
-  beforeEach(() => {
-    replace.mockReset();
-  });
-  afterEach(() => server.restoreHandlers());
-  afterAll(() => server.close());
-
   const Wrapper = () => {
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          refetchIntervalInBackground: false,
-          retry: 0,
-        },
-      },
-    });
-
     return (
       <IntlProvider locale="en">
-        <QueryClientProvider client={queryClient}>
-          <FilterProvider>
-            <Vehicles />
-          </FilterProvider>
-        </QueryClientProvider>
+        <FilterProvider>
+          <Vehicles vehicles={vehicles} />
+        </FilterProvider>
       </IntlProvider>
     );
   };
 
-  it("loads vehicles", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
-    );
+  it("loads vehicles", () => {
     render(<Wrapper />);
-    // Loading state
-    expect(screen.getByLabelText(/loading vehicles/i)).toBeInTheDocument();
     // Wait for the list to load
-    const card = within(await screen.findByLabelText(/vehicle list/i));
+    const card = within(screen.getByLabelText(/vehicle list/i));
     const list = within(card.getByRole("list"));
     expect(
       list.getByRole("link", {
@@ -87,29 +43,9 @@ describe("Vehicles", () => {
     ).toBeInTheDocument();
   });
 
-  it("handles an error loading the vehicles", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.status(500)))
-    );
+  it("handles no search results", () => {
     render(<Wrapper />);
-    expect(
-      await screen.findByRole("heading", { name: /something went wrong!/i })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/500: internal server error/i)).toBeInTheDocument();
-    // Try again should reload
-    userEvent.click(screen.getByRole("button", { name: /try again/i }));
-    // Wait for the loading card
-    expect(
-      await screen.findByLabelText(/loading vehicles/i)
-    ).toBeInTheDocument();
-  });
-
-  it("handles no search results", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
-    );
-    render(<Wrapper />);
-    userEvent.type(await screen.findByPlaceholderText(/search/i), "test");
+    userEvent.type(screen.getByPlaceholderText(/search/i), "test");
     expect(
       screen.getByRole("heading", { name: /no matching vehicles found\./i })
     ).toBeInTheDocument();

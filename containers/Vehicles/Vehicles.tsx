@@ -9,45 +9,13 @@ import clsx from "clsx";
 import {
   Paper,
   List,
-  ListItem,
   ListItemText,
   ListItemLink,
-  Skeleton,
   Text,
-  PageError,
   SearchField,
 } from "@/components";
 import type { Vehicle } from "@/types";
-import { useVehicles } from "@/queries";
 import { useFilter } from "@/providers";
-
-const Loading = () => {
-  const intl = useIntl();
-
-  return (
-    <Paper
-      aria-label={intl.formatMessage({
-        id: "loadingVehicles",
-        defaultMessage: "Loading vehicles",
-      })}
-    >
-      <Text
-        variant="h3"
-        component="h1"
-        className="p-4 border-b border-b-slate-300"
-      >
-        <Skeleton />
-      </Text>
-      <List dividers>
-        {[...Array(10).keys()].map((key) => (
-          <ListItem key={key}>
-            <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
-          </ListItem>
-        ))}
-      </List>
-    </Paper>
-  );
-};
 
 const NoResults = () => (
   <div className="p-8 flex flex-col items-center space-y-4">
@@ -148,24 +116,13 @@ export const Data = ({ data = [] }: DataProps) => {
   );
 };
 
-const Error = PageError;
-
 interface VehiclesProps {
+  vehicles: Vehicle[];
   fabPadding?: boolean;
 }
 
-export const Vehicles = ({ fabPadding }: VehiclesProps) => {
-  const { isLoading, isSuccess, data, isError, error, refetch } = useVehicles();
-
-  return (
-    <div className={clsx("max-w-5xl mx-auto", fabPadding && "mb-24")}>
-      {isLoading && <Loading />}
-      {isSuccess && <Data data={data} />}
-      {isError && <Error error={error} refetch={refetch} />}
-    </div>
-  );
-};
-
-Vehicles.Loading = Loading;
-Vehicles.Data = Data;
-Vehicles.Error = Error;
+export const Vehicles = ({ vehicles, fabPadding }: VehiclesProps) => (
+  <div className={clsx("max-w-5xl mx-auto", fabPadding && "mb-24")}>
+    <Data data={vehicles} />
+  </div>
+);

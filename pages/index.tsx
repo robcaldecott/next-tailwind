@@ -1,13 +1,19 @@
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import Link from "next/link";
 import { FormattedMessage } from "react-intl";
+import { PlusIcon } from "@heroicons/react/solid";
 import { Vehicles } from "@/containers";
 import { ResponsiveFab } from "@/components";
-import { PlusIcon } from "@heroicons/react/solid";
+import type { Vehicle } from "@/types";
+import { vehicles } from "@/mocks";
 
-const Home: NextPage = () => (
+interface HomePageProps {
+  vehicles: Vehicle[];
+}
+
+const Home: NextPage<HomePageProps> = ({ vehicles }) => (
   <>
-    <Vehicles fabPadding />
+    <Vehicles fabPadding vehicles={vehicles} />
 
     <Link href="/create" passHref>
       <ResponsiveFab
@@ -22,5 +28,13 @@ const Home: NextPage = () => (
     </Link>
   </>
 );
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      vehicles,
+    },
+  };
+};
 
 export default Home;

@@ -59,23 +59,15 @@ describe("Details", () => {
     return (
       <IntlProvider locale="en">
         <QueryClientProvider client={queryClient}>
-          <Details id="123" />
+          <Details vehicle={vehicle} />
         </QueryClientProvider>
       </IntlProvider>
     );
   };
 
-  it("loads vehicle details", async () => {
-    server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.json(vehicle))
-      )
-    );
+  it("loads vehicle details", () => {
     render(<Wrapper />);
-    // Loading state
-    expect(screen.getByLabelText(/loading vehicle/i)).toBeInTheDocument();
-    // Wait for the details to load
-    const card = within(await screen.findByLabelText(/vehicle details/i));
+    const card = within(screen.getByLabelText(/vehicle details/i));
     // Check the headings
     expect(
       card.getByText(/volkswagen explorer cargo van/i)
@@ -89,25 +81,6 @@ describe("Details", () => {
     expect(card.getByLabelText(/registration date/i)).toHaveTextContent(
       /Friday, July 8, 2005/i
     );
-  });
-
-  it("handles an error loading the vehicle", async () => {
-    server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.status(500))
-      )
-    );
-    render(<Wrapper />);
-    expect(
-      await screen.findByRole("heading", { name: /something went wrong!/i })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/500: internal server error/i)).toBeInTheDocument();
-    // Try again should reload
-    userEvent.click(screen.getByRole("button", { name: /try again/i }));
-    // Wait for the loading card
-    expect(
-      await screen.findByLabelText(/loading vehicle/i)
-    ).toBeInTheDocument();
   });
 
   it("deletes the vehicle", async () => {

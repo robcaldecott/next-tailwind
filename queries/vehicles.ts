@@ -1,13 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
-import type { UseQueryResult, UseMutationResult } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import type { UseMutationResult } from "react-query";
 import { http } from "@/utils";
 import type { Vehicle, VehiclePayload } from "@/types";
-
-export const useVehicles = (): UseQueryResult<Vehicle[], Response> =>
-  useQuery("vehicles", () => http.get("/api/vehicles"));
-
-export const useVehicle = (id: string): UseQueryResult<Vehicle, Response> =>
-  useQuery(["vehicle", id], () => http.get(`/api/vehicles/${id}`));
 
 export const useCreateVehicle = (): UseMutationResult<
   Vehicle,

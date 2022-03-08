@@ -8,43 +8,12 @@ import {
   CardHeader,
   CardContent,
   CardActions,
-  Skeleton,
   Button,
-  PageError,
   Alert,
 } from "@/components";
 import type { Vehicle } from "@/types";
-import { useVehicle, useDeleteVehicle } from "@/queries";
+import { useDeleteVehicle } from "@/queries";
 import { DeleteDialog } from "./DeleteDialog";
-
-const Loading = () => {
-  const intl = useIntl();
-
-  return (
-    <>
-      <Breadcrumbs />
-
-      <Card
-        aria-label={intl.formatMessage({
-          id: "loadingVehicle",
-          defaultMessage: "Loading vehicle",
-        })}
-      >
-        <CardHeader
-          title={<Skeleton />}
-          subheader={<Skeleton />}
-          divider
-          className="bg-sky-50"
-        />
-        <CardContent>
-          {[...Array(16).keys()].map((key) => (
-            <Skeleton key={key} height={20} />
-          ))}
-        </CardContent>
-      </Card>
-    </>
-  );
-};
 
 interface SwatchProps {
   color: string;
@@ -202,25 +171,10 @@ const Data = ({ data }: DataProps) => {
   );
 };
 
-const Error = PageError;
-
-interface DetailsProps {
-  id: string;
-}
-
-export const Details = ({ id }: DetailsProps) => {
-  const { isLoading, isSuccess, data, isError, error, refetch } =
-    useVehicle(id);
-
+export const Details = ({ vehicle }: { vehicle: Vehicle }) => {
   return (
     <div className="max-w-3xl mx-auto">
-      {isLoading && <Loading />}
-      {isSuccess && <Data data={data!} />}
-      {isError && <Error error={error} refetch={refetch} />}
+      <Data data={vehicle} />
     </div>
   );
 };
-
-Details.Loading = Loading;
-Details.Data = Data;
-Details.Error = Error;

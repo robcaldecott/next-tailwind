@@ -1,12 +1,29 @@
-import { useRouter } from "next/router";
 import { Details } from "@/containers";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticPaths, GetStaticProps } from "next";
+import type { Vehicle } from "@/types";
+import { vehicles } from "@/mocks";
 
-const DetailsPage: NextPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
+interface DetailsPageProps {
+  vehicle: Vehicle;
+}
 
-  return <Details id={id as string} />;
+const DetailsPage: NextPage<DetailsPageProps> = ({ vehicle }) => {
+  return <Details vehicle={vehicle} />;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = vehicles.map(({ id }) => ({
+    params: { id },
+  }));
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  return {
+    props: {
+      vehicle: vehicles.find((vehicle) => vehicle.id === params?.id),
+    },
+  };
 };
 
 export default DetailsPage;
