@@ -1,9 +1,7 @@
-import { vi, describe, expect, test, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { vi, describe, expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Button } from ".";
-
-afterEach(cleanup);
 
 describe("Button", () => {
   test("click", () => {

@@ -1,12 +1,16 @@
+const path = require("path");
+
 module.exports = {
   stories: [
-    "../components/**/*.stories.mdx",
     "../components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../containers/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-addon-next-router",
+    "storybook-dark-mode",
     {
       /**
        * Fix Storybook issue with PostCSS@8
@@ -23,5 +27,12 @@ module.exports = {
   framework: "@storybook/react",
   core: {
     builder: "webpack5",
+  },
+  reactOptions: {
+    fastRefresh: true,
+  },
+  webpackFinal: (config) => {
+    config.resolve.alias["@"] = path.resolve(__dirname, "../");
+    return config;
   },
 };

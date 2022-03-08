@@ -8,6 +8,7 @@ export interface ButtonProps {
 export const Button = ({
   variant = "primary",
   disabled,
+  className,
   ...props
 }: ButtonProps & ComponentPropsWithoutRef<"button">) => (
   <button
@@ -22,7 +23,9 @@ export const Button = ({
         "bg-transparent text-slate-900 border-slate-900 hover:text-white hover:bg-slate-900",
       // Error
       variant === "error" &&
-        "bg-transparent text-red-500 border-red-500 hover:text-white hover:bg-red-500"
+        "bg-transparent text-red-500 border-red-500 hover:text-white hover:bg-red-500",
+      // Additional classes
+      className
     )}
     disabled={disabled}
     {...props}
