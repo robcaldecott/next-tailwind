@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
 import { SearchIcon } from "@heroicons/react/solid";
+import { TextFieldInput } from "../TextField";
 
 export interface SearchFieldProps extends ComponentPropsWithoutRef<"input"> {}
 
@@ -12,13 +13,7 @@ export const SearchField = ({
   <label className={clsx("block", className)}>
     {/* Input */}
     <span className="block relative">
-      <input
-        className={clsx(
-          "font-sans text-sm py-2 pl-9 pr-2 block w-full min-h-[40px] bg-white text-slate-900 border border-slate-300 hover:border-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-2xl outline-none placeholder-slate-400 placeholder-shown:italic disabled:bg-slate-50 disabled:text-slate-400 disabled:hover:border-slate-300 disabled:shadow-none transition-colors shadow-sm"
-        )}
-        disabled={disabled}
-        {...props}
-      />
+      <TextFieldInput disabled={disabled} rounded hasIcon {...props} />
 
       {/* Icon */}
       <span className="flex absolute left-2 inset-y-0 items-center">

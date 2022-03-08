@@ -35,18 +35,24 @@ export const TextFieldError = (props: TextFieldErrorProps) => (
 
 interface TextFieldInputProps<C extends ElementType> {
   component?: C;
+  rounded?: boolean;
+  hasIcon?: boolean;
 }
 
 export const TextFieldInput = <C extends ElementType = "input">({
   component,
   className,
+  rounded,
+  hasIcon,
   ...props
 }: TextFieldInputProps<C> & ComponentPropsWithoutRef<C>) => {
   const Component = component || "input";
   return (
     <Component
       className={clsx(
-        "font-sans text-sm block w-full min-h-[40px] bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 hover:border-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 rounded-md py-2 px-2 outline-none placeholder-slate-400 placeholder-shown:italic disabled:bg-slate-50 disabled:text-slate-400 disabled:hover:border-slate-300 disabled:shadow-none transition-colors shadow-sm",
+        "font-sans text-sm block w-full min-h-[40px] py-2 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-300 hover:border-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none placeholder-slate-400 placeholder-shown:italic disabled:bg-slate-50 disabled:text-slate-400 disabled:hover:border-slate-300 disabled:shadow-none transition-colors shadow-sm",
+        rounded ? "rounded-2xl" : "rounded-md",
+        hasIcon ? "pl-9 pr-2" : "px-2",
         className
       )}
       {...props}
