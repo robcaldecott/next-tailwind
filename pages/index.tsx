@@ -1,4 +1,4 @@
-import type { NextPage, GetStaticProps } from "next";
+import type { NextPage, GetStaticProps, GetServerSideProps } from "next";
 import Link from "next/link";
 import { FormattedMessage } from "react-intl";
 import { PlusIcon } from "@heroicons/react/solid";
@@ -29,7 +29,7 @@ const Home: NextPage<HomePageProps> = ({ vehicles }) => (
   </>
 );
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       vehicles,
