@@ -22,7 +22,7 @@ vi.mock("next/router", () => ({
   useRouter: () => ({ replace }),
 }));
 
-describe("Create", () => {
+describe("Details", () => {
   const vehicle = {
     id: "5e0562c5-a50b-42ff-83e5-4c004c5b639a",
     manufacturer: "Volkswagen",
