@@ -167,7 +167,7 @@ export const Create = () => {
             );
           }}
         >
-          {(formik) => (
+          {({ resetForm, isSubmitting }) => (
             <Form>
               {/* Field grid */}
               <div className="p-4 grid grid-cols-12 gap-4">
@@ -302,8 +302,8 @@ export const Create = () => {
                 <Button
                   type="button"
                   variant="secondary"
-                  onClick={() => formik.resetForm()}
-                  disabled={formik.isSubmitting}
+                  onClick={() => resetForm()}
+                  disabled={isSubmitting}
                   className="basis-full md:basis-auto"
                 >
                   <FormattedMessage id="reset" defaultMessage="Reset" />
@@ -314,12 +314,12 @@ export const Create = () => {
                     type="button"
                     variant="secondary"
                     onClick={() => router.push("/")}
-                    disabled={formik.isSubmitting}
+                    disabled={isSubmitting}
                   >
                     <FormattedMessage id="cancel" defaultMessage="Cancel" />
                   </Button>
 
-                  <Button type="submit" disabled={formik.isSubmitting}>
+                  <Button type="submit" disabled={isSubmitting}>
                     <FormattedMessage id="create" defaultMessage="Create" />
                   </Button>
                 </div>

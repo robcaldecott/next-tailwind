@@ -2,24 +2,23 @@ import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
 import { Text } from "../Text";
 
-export const Card = ({
-  className,
-  ...other
-}: ComponentPropsWithoutRef<"div">) => (
+interface CardProps extends ComponentPropsWithoutRef<"div"> {}
+
+export const Card = ({ className, ...props }: CardProps) => (
   <div
     className={clsx(
       "bg-white dark:bg-slate-800 shadow-2xl rounded-2xl overflow-hidden",
       className
     )}
-    {...other}
+    {...props}
   />
 );
 
-interface CardHeaderProps {
+interface CardHeaderProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "title"> {
   title: ReactNode;
   subheader: ReactNode;
   divider?: boolean;
-  className?: string;
 }
 
 export const CardHeader = ({
@@ -27,6 +26,7 @@ export const CardHeader = ({
   subheader,
   divider,
   className,
+  ...props
 }: CardHeaderProps) => (
   <div
     className={clsx(
@@ -34,6 +34,7 @@ export const CardHeader = ({
       divider && "border-b border-b-slate-300 dark:border-b-slate-600",
       className
     )}
+    {...props}
   >
     <Text variant="h2" noWrap>
       {title}
@@ -58,10 +59,9 @@ export const CardContent = ({ divider, ...props }: CardContentProps) => (
   />
 );
 
-export const CardActions = ({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"div">) => (
+interface CardActionsProps extends ComponentPropsWithoutRef<"div"> {}
+
+export const CardActions = ({ className, ...props }: CardActionsProps) => (
   <div
     className={clsx(
       "bg-sky-50 dark:bg-sky-900 p-2 flex items-center space-x-2",

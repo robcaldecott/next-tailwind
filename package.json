@@ -9,6 +9,7 @@
     "lint": "next lint",
     "export": "next export",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "typecheck": "tsc",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",

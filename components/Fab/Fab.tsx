@@ -8,7 +8,7 @@ interface FabProps extends Omit<ComponentPropsWithoutRef<"a">, "children"> {
 }
 
 export const Fab = forwardRef<HTMLAnchorElement, FabProps>(
-  ({ icon: Icon, label, className, children, ...other }, ref) => (
+  ({ icon: Icon, label, className, children, ...props }, ref) => (
     <a
       ref={ref}
       className={clsx(
@@ -16,7 +16,7 @@ export const Fab = forwardRef<HTMLAnchorElement, FabProps>(
         label ? "h-12 px-4 font-sans font-medium text-sm" : "w-14 h-14",
         className
       )}
-      {...other}
+      {...props}
     >
       <Icon className={clsx("h-6 w-6", label && "mr-2")} />
       {label}

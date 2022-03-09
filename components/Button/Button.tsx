@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 
-export interface ButtonProps {
+export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   variant?: "primary" | "secondary" | "error";
 }
 
@@ -10,7 +10,7 @@ export const Button = ({
   disabled,
   className,
   ...props
-}: ButtonProps & ComponentPropsWithoutRef<"button">) => (
+}: ButtonProps) => (
   <button
     className={clsx(
       // Common styles

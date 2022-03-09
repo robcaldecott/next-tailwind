@@ -7,24 +7,19 @@ import {
 import clsx from "clsx";
 import { Text } from "../Text";
 
-interface ListProps {
+interface ListProps extends ComponentPropsWithoutRef<"ul"> {
   dividers?: boolean;
   padding?: boolean;
 }
 
-export const List = ({
-  dividers,
-  padding,
-  className,
-  ...other
-}: ListProps & ComponentPropsWithoutRef<"ul">) => (
+export const List = ({ dividers, padding, className, ...props }: ListProps) => (
   <ul
     className={clsx(
       padding && "py-2",
       dividers && "divide-y divide-slate-300 dark:divide-slate-500",
       className
     )}
-    {...other}
+    {...props}
   />
 );
 
@@ -38,7 +33,7 @@ export const ListItem = <C extends ElementType = "li">({
   button,
   className,
   divider,
-  ...other
+  ...props
 }: ListItemProps<C> &
   Omit<ComponentPropsWithoutRef<C>, keyof ListItemProps<C>>) => {
   const Component = component || "li";
@@ -49,24 +44,25 @@ export const ListItem = <C extends ElementType = "li">({
         button && "hover:bg-slate-100/75 dark:hover:bg-slate-700/75 text-left",
         className
       )}
-      {...other}
+      {...props}
     />
   );
 };
 
-export const ListItemLink = forwardRef<
-  HTMLAnchorElement,
-  ComponentPropsWithoutRef<"a">
->(({ className, ...other }, ref) => (
-  <a
-    ref={ref}
-    className={clsx(
-      "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 dark:focus:bg-slate-700 outline-none hover:bg-slate-100/75 dark:hover:bg-slate-700/75 text-left",
-      className
-    )}
-    {...other}
-  />
-));
+interface ListItemLinkProps extends ComponentPropsWithoutRef<"a"> {}
+
+export const ListItemLink = forwardRef<HTMLAnchorElement, ListItemLinkProps>(
+  ({ className, ...props }, ref) => (
+    <a
+      ref={ref}
+      className={clsx(
+        "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 dark:focus:bg-slate-700 outline-none hover:bg-slate-100/75 dark:hover:bg-slate-700/75 text-left",
+        className
+      )}
+      {...props}
+    />
+  )
+);
 ListItemLink.displayName = "ListItemLink";
 
 interface ListItemTextProps
@@ -79,9 +75,9 @@ export const ListItemText = ({
   className,
   primary,
   secondary,
-  ...other
+  ...props
 }: ListItemTextProps) => (
-  <div className={clsx("my-[6px] flex-auto min-w-0", className)} {...other}>
+  <div className={clsx("my-[6px] flex-auto min-w-0", className)} {...props}>
     <Text component="span" variant="body1" block noWrap>
       {primary}
     </Text>

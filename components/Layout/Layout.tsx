@@ -25,6 +25,8 @@ export const Layout = ({ children }: LayoutProps) => {
         <Text component="h1" variant="h3" color="inherit" flexGrow={1}>
           <FormattedMessage id="appTitle" defaultMessage="Vehicle Manager" />
         </Text>
+
+        {/* Theme switcher. */}
         <IconButton
           color="inherit"
           icon={mode === "light" ? MoonIcon : SunIcon}

@@ -1,13 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
+import { ThemeProvider } from "@/providers";
 import { Layout } from ".";
 
 describe("Layout", () => {
   it("renders", () => {
     render(
       <IntlProvider locale="en">
-        <Layout>Content</Layout>
+        <ThemeProvider>
+          <Layout>Content</Layout>
+        </ThemeProvider>
       </IntlProvider>
     );
     // We should kave a header

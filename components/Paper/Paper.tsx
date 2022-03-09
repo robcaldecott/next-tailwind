@@ -8,8 +8,7 @@ interface PaperProps<C extends ElementType> {
 export const Paper = <C extends ElementType = "div">({
   component,
   className,
-  children,
-  ...other
+  ...props
 }: PaperProps<C> & Omit<ComponentPropsWithRef<C>, keyof PaperProps<C>>) => {
   const Component = component || "div";
   return (
@@ -18,9 +17,7 @@ export const Paper = <C extends ElementType = "div">({
         "bg-white dark:bg-slate-800 shadow-2xl dark:shadow-gray-800 rounded-2xl overflow-hidden",
         className
       )}
-      {...other}
-    >
-      {children}
-    </Component>
+      {...props}
+    />
   );
 };

@@ -26,7 +26,7 @@ export const Text = <C extends ElementType = "div">({
   block,
   component,
   className,
-  ...other
+  ...props
 }: TextProps<C>) => {
   const Component = component || "div";
   return (
@@ -61,7 +61,7 @@ export const Text = <C extends ElementType = "div">({
         // Additional styles
         className
       )}
-      {...other}
+      {...props}
     >
       {children}
     </Component>

@@ -1,16 +1,11 @@
 import { ComponentPropsWithoutRef, useEffect } from "react";
 
-interface DialogProps {
+interface DialogProps extends ComponentPropsWithoutRef<"div"> {
   open: boolean;
   onClose?: () => void;
 }
 
-export const Dialog = ({
-  open,
-  children,
-  onClose,
-  ...other
-}: DialogProps & ComponentPropsWithoutRef<"div">) => {
+export const Dialog = ({ open, children, onClose, ...props }: DialogProps) => {
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.key === "Escape" && onClose) {
@@ -39,7 +34,7 @@ export const Dialog = ({
         onClick={(event) => {
           event.stopPropagation();
         }}
-        {...other}
+        {...props}
       >
         {children}
       </div>
@@ -47,29 +42,34 @@ export const Dialog = ({
   ) : null;
 };
 
-export const DialogTitle = ({
-  children,
-  ...other
-}: ComponentPropsWithoutRef<"h2">) => (
+interface DialogTitleProps extends ComponentPropsWithoutRef<"h2"> {}
+
+export const DialogTitle = ({ children, ...props }: DialogTitleProps) => (
   <h2
     className="p-4 font-sans font-medium text-xl text-slate-900 dark:text-white"
-    {...other}
+    {...props}
   >
     {children}
   </h2>
 );
 
-export const DialogContent = (props: ComponentPropsWithoutRef<"div">) => (
+interface DialogContentProps extends ComponentPropsWithoutRef<"div"> {}
+
+export const DialogContent = (props: DialogContentProps) => (
   <div className="px-4 pb-4" {...props} />
 );
 
-export const DialogContentText = (props: ComponentPropsWithoutRef<"p">) => (
+interface DialogContentTextProps extends ComponentPropsWithoutRef<"p"> {}
+
+export const DialogContentText = (props: DialogContentTextProps) => (
   <p
     className="font-sans text-slate-500 dark:text-slate-300 text-base font-normal"
     {...props}
   />
 );
 
-export const DialogActions = (props: ComponentPropsWithoutRef<"div">) => (
+interface DialogActionsProps extends ComponentPropsWithoutRef<"div"> {}
+
+export const DialogActions = (props: DialogActionsProps) => (
   <div className="p-2 flex justify-end items-center space-x-2" {...props} />
 );

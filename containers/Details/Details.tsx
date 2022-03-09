@@ -37,7 +37,7 @@ const Loading = () => {
           className="bg-sky-50"
         />
         <CardContent>
-          {Array.from(Array(16).keys()).map((key) => (
+          {[...Array(16).keys()].map((key) => (
             <Skeleton key={key} height={20} />
           ))}
         </CardContent>
@@ -204,7 +204,11 @@ const Data = ({ data }: DataProps) => {
 
 const Error = PageError;
 
-export const Details = ({ id }: { id: string }) => {
+interface DetailsProps {
+  id: string;
+}
+
+export const Details = ({ id }: DetailsProps) => {
   const { isLoading, isSuccess, data, isError, error, refetch } =
     useVehicle(id);
 

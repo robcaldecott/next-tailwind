@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 import {
   ChevronRightIcon,
@@ -39,7 +39,7 @@ const Loading = () => {
         <Skeleton />
       </Text>
       <List dividers>
-        {Array.from(Array(10).keys()).map((key) => (
+        {[...Array(10).keys()].map((key) => (
           <ListItem key={key}>
             <ListItemText primary={<Skeleton />} secondary={<Skeleton />} />
           </ListItem>
@@ -69,7 +69,11 @@ const NoResults = () => (
   </div>
 );
 
-const Badge = ({ children }: { children: number }) => (
+interface BadgeProps {
+  children: ReactNode;
+}
+
+const Badge = ({ children }: BadgeProps) => (
   <span className="rounded-full px-2 inline-flex h-5 min-w-[20px] justify-center items-center bg-sky-700 dark:bg-sky-500 text-white font-sans text-xs font-medium">
     {children}
   </span>

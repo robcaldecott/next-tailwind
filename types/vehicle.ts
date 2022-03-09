@@ -11,4 +11,5 @@ export interface Vehicle {
   registrationNumber: string;
 }
 
+// When we create a new vehicle no ID is required.
 export interface VehiclePayload extends Omit<Vehicle, "id"> {}
