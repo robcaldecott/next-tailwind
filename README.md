@@ -18,11 +18,12 @@ You can then install the project dependencies:
 pnpm install
 ```
 
-If you prefer to use `npm` then delete `pnpm-lock.yaml` and run `npm install`.
+If you prefer to use `npm` then delete `pnpm-lock.yaml` and run `npm install`
+instead. You can then use `npm run <command>` instead of `pnpm <command>`.
 
 ## Tailwind CSS
 
-In order to experiment I have create a small library of components that use
+In order to experiment I have created a small library of components that use
 Tailwind for the styling. These can be found in the `components` folder. I have
 used Storybook to develop all the components which can be started with:
 
@@ -55,7 +56,7 @@ for example.
 ## Next.js
 
 This is also my first foray into using Next.js after years using building SPAs
-using `create-react-app` and, more recently Vite. I am impressed with the
+using `create-react-app` and more recently Vite. I am impressed with the
 developer experience and have messed with client-side data fetching, SSG and
 SSR. For the purproses of this demo the `main` branch uses client-side data
 fetching via `react-query` and some fake data added to Next API routes (in
@@ -63,11 +64,11 @@ itself an excellent way to put together a BFF.)
 
 ### Folder structure
 
-The default out-of-the-box Next.js settings eschew a `src` folder in favour of
+The default out-of-the-box Next.js settings eschews a `src` folder in favour of
 root-level folders for pages, components, etc. Although I am not crazy about
 this pattern I have stuck to it simply because it's the default 😀
 
-I have added addition folders and ended up with the following structure:
+I have added additional folders and ended up with the following structure:
 
 | Folder       | Description                                              |
 | ------------ | -------------------------------------------------------- |
@@ -101,7 +102,8 @@ page config the stories for this code would need to reside in a different folder
 and I felt this was getting messy.
 
 I am interested to hear about better guidance around accepted standards for
-structuting a Next.js app.
+structuting a Next.js app. Perhaps using atomic design would mean composite
+components have more structure.
 
 ### SSG and SSR
 
@@ -115,9 +117,9 @@ data fetching as it can reduce the complexity of the client code considerably.
 ## Testing
 
 For unit testing I have opted to use [Vitest](https://vitest.dev/). It is faster
-than Jest, easier to configure and although new it is actively developed.
+than Jest, easier to configure and is actively developed.
 
-On top opf `vitest` I have added React Testing Library and the `jest-dom`
+On top of `vitest` I have added React Testing Library and the `jest-dom`
 matchers.
 
 You can run the tests and start the watcher with:
@@ -172,3 +174,6 @@ Also:
   Storybook.
 - I found getting dark mode right quite hard so it is not complete.
 - More code could be probably be shared.
+- Storybook is configured using webpack 5 but the HMR performance is not very
+  good. Any tips to speed it up are welcome (Vite is a potential but it's quite
+  a lot of config and the builder is still a little buggy.)
