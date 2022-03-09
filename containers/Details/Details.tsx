@@ -171,7 +171,11 @@ const Data = ({ data }: DataProps) => {
   );
 };
 
-export const Details = ({ vehicle }: { vehicle: Vehicle }) => {
+interface DetailsProps {
+  vehicle: Vehicle;
+}
+
+export const Details = ({ vehicle }: DetailsProps) => {
   return (
     <div className="max-w-3xl mx-auto">
       <Data data={vehicle} />
