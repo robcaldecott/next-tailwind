@@ -35,7 +35,7 @@ export const Dialog = ({
     >
       <div
         role="dialog"
-        className="bg-white rounded-2xl m-8 max-w-screen-sm shadow-2xl"
+        className="bg-white dark:bg-slate-800 rounded-2xl m-8 max-w-screen-sm shadow-2xl"
         onClick={(event) => {
           event.stopPropagation();
         }}
@@ -51,7 +51,10 @@ export const DialogTitle = ({
   children,
   ...other
 }: ComponentPropsWithoutRef<"h2">) => (
-  <h2 className="p-4 font-sans font-medium text-xl text-slate-900" {...other}>
+  <h2
+    className="p-4 font-sans font-medium text-xl text-slate-900 dark:text-white"
+    {...other}
+  >
     {children}
   </h2>
 );
@@ -61,7 +64,10 @@ export const DialogContent = (props: ComponentPropsWithoutRef<"div">) => (
 );
 
 export const DialogContentText = (props: ComponentPropsWithoutRef<"p">) => (
-  <p className="font-sans text-slate-500 text-base font-normal" {...props} />
+  <p
+    className="font-sans text-slate-500 dark:text-slate-300 text-base font-normal"
+    {...props}
+  />
 );
 
 export const DialogActions = (props: ComponentPropsWithoutRef<"div">) => (

@@ -6,6 +6,7 @@ export * from "./Card";
 export * from "./Dialog";
 export * from "./ErrorMessage";
 export * from "./Fab";
+export * from "./IconButton";
 export * from "./Layout";
 export * from "./List";
 export * from "./PageError";

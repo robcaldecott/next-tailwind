@@ -8,7 +8,7 @@ export const Card = ({
 }: ComponentPropsWithoutRef<"div">) => (
   <div
     className={clsx(
-      "bg-white shadow-2xl rounded-2xl overflow-hidden",
+      "bg-white dark:bg-slate-800 shadow-2xl rounded-2xl overflow-hidden",
       className
     )}
     {...other}
@@ -30,8 +30,8 @@ export const CardHeader = ({
 }: CardHeaderProps) => (
   <div
     className={clsx(
-      "bg-sky-50 p-4 flex flex-col",
-      divider && "border-b border-b-slate-300",
+      "bg-sky-50 dark:bg-sky-900 p-4 flex flex-col",
+      divider && "border-b border-b-slate-300 dark:border-b-slate-600",
       className
     )}
   >
@@ -50,7 +50,10 @@ interface CardContentProps extends ComponentPropsWithoutRef<"div"> {
 
 export const CardContent = ({ divider, ...props }: CardContentProps) => (
   <div
-    className={clsx("p-4", divider && "border-b border-b-slate-300")}
+    className={clsx(
+      "p-4",
+      divider && "border-b border-b-slate-300 dark:border-b-slate-600"
+    )}
     {...props}
   />
 );
@@ -60,7 +63,10 @@ export const CardActions = ({
   ...props
 }: ComponentPropsWithoutRef<"div">) => (
   <div
-    className={clsx("bg-sky-50 p-2 flex items-center space-x-2", className)}
+    className={clsx(
+      "bg-sky-50 dark:bg-sky-900 p-2 flex items-center space-x-2",
+      className
+    )}
     {...props}
   />
 );

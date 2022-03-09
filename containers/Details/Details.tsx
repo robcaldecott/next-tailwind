@@ -70,12 +70,12 @@ const Field = ({ id, label, value }: FieldProps) => (
   <>
     <dt
       id={id}
-      className="font-sans text-base font-medium mt-4 first:mt-0 text-slate-900"
+      className="font-sans text-base font-medium mt-4 first:mt-0 text-slate-900 dark:text-white"
     >
       {label}
     </dt>
     <dd
-      className="font-sans text-base font-normal text-slate-500"
+      className="font-sans text-base font-normal text-slate-500 dark:text-slate-300"
       aria-labelledby={id}
     >
       {value}

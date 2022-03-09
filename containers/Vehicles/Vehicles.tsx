@@ -51,7 +51,7 @@ const Loading = () => {
 
 const NoResults = () => (
   <div className="p-8 flex flex-col items-center space-y-4">
-    <InformationCircleIcon className="text-indigo-700 h-16 w-16" />
+    <InformationCircleIcon className="text-indigo-700 dark:text-indigo-400 h-16 w-16" />
 
     <Text variant="h2" component="h2" align="center">
       <FormattedMessage
@@ -70,7 +70,7 @@ const NoResults = () => (
 );
 
 const Badge = ({ children }: { children: number }) => (
-  <span className="rounded-full px-2 inline-flex h-5 min-w-[20px] justify-center items-center bg-sky-700 text-white font-sans text-xs font-medium">
+  <span className="rounded-full px-2 inline-flex h-5 min-w-[20px] justify-center items-center bg-sky-700 dark:bg-sky-500 text-white font-sans text-xs font-medium">
     {children}
   </span>
 );
@@ -102,7 +102,7 @@ export const Data = ({ data = [] }: DataProps) => {
         defaultMessage: "Vehicle list",
       })}
     >
-      <div className="p-4 border-b border-b-slate-300 bg-sky-50">
+      <div className="p-4 border-b border-b-slate-300 bg-sky-50 dark:bg-sky-900">
         <div className="flex items-center flex-wrap md:flex-nowrap space-y-4 md:space-y-0">
           <div className="flex grow basis-full items-center space-x-2">
             <Text variant="h2" component="h1">

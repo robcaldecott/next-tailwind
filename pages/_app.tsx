@@ -4,18 +4,20 @@ import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { IntlProvider } from "react-intl";
 import { Layout } from "@/components";
-import { FilterProvider } from "@/providers";
+import { ThemeProvider, FilterProvider } from "@/providers";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   return (
     <IntlProvider locale="en">
       <QueryClientProvider client={queryClient}>
-        <FilterProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </FilterProvider>
+        <ThemeProvider>
+          <FilterProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </FilterProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </IntlProvider>
   );

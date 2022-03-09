@@ -21,7 +21,7 @@ export const List = ({
   <ul
     className={clsx(
       padding && "py-2",
-      dividers && "divide-y divide-slate-300",
+      dividers && "divide-y divide-slate-300 dark:divide-slate-500",
       className
     )}
     {...other}
@@ -45,8 +45,8 @@ export const ListItem = <C extends ElementType = "li">({
   return (
     <Component
       className={clsx(
-        "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 outline-none",
-        button && "hover:bg-slate-100/75 text-left",
+        "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 dark:focus:bg-slate-700 outline-none",
+        button && "hover:bg-slate-100/75 dark:hover:bg-slate-700/75 text-left",
         className
       )}
       {...other}
@@ -61,7 +61,7 @@ export const ListItemLink = forwardRef<
   <a
     ref={ref}
     className={clsx(
-      "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 outline-none hover:bg-slate-100/75 text-left",
+      "py-2 px-4 w-full flex justify-start items-center space-x-2 focus:bg-slate-200 dark:focus:bg-slate-700 outline-none hover:bg-slate-100/75 dark:hover:bg-slate-700/75 text-left",
       className
     )}
     {...other}

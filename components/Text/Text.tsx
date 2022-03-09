@@ -35,7 +35,7 @@ export const Text = <C extends ElementType = "div">({
         `font-sans`,
         // Colour
         color === "primary" && "text-slate-900 dark:text-white",
-        color === "secondary" && "text-slate-500",
+        color === "secondary" && "text-slate-500 dark:text-slate-300",
         color === "inherit" && "text-inherit",
         // Variants
         variant === "body1" && "font-normal text-base",

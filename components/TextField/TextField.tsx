@@ -19,7 +19,7 @@ export const TextFieldLabel = ({
         : "text-slate-900 dark:text-slate-300",
       isRequired && "after:content-['*'] after:ml-0.5",
       isRequired && {
-        "after:text-sky-500": !disabled,
+        "after:text-sky-500 dark:after:text-sky-300": !disabled,
         "after:text-slate-400": disabled,
       }
     )}
@@ -30,7 +30,10 @@ export const TextFieldLabel = ({
 export interface TextFieldErrorProps extends ComponentPropsWithoutRef<"span"> {}
 
 export const TextFieldError = (props: TextFieldErrorProps) => (
-  <span className="mt-2 font-sans text-sm font-light text-red-500" {...props} />
+  <span
+    className="mt-2 font-sans text-sm font-light text-red-500 dark:text-red-300"
+    {...props}
+  />
 );
 
 interface TextFieldInputProps<C extends ElementType> {

@@ -67,7 +67,7 @@ export const Create = () => {
 
       <Paper>
         <Text
-          className="p-4 border-b border-b-slate-300 bg-sky-50"
+          className="p-4 border-b border-b-slate-300 dark:border-b-slate-600 bg-sky-50 dark:bg-sky-900"
           variant="h2"
           component="h2"
         >
@@ -298,7 +298,7 @@ export const Create = () => {
               </div>
 
               {/* Buttons */}
-              <div className="bg-sky-50 flex flex-wrap md:flex-nowrap p-4 space-x-4 space-y-4 md:space-y-0 justify-between border-t border-t-slate-300">
+              <div className="bg-sky-50 dark:bg-sky-900 flex flex-wrap md:flex-nowrap p-4 space-x-4 space-y-4 md:space-y-0 justify-between border-t border-t-slate-300 dark:border-t-slate-600">
                 <Button
                   type="button"
                   variant="secondary"
