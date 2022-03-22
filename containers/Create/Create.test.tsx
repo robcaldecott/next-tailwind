@@ -5,7 +5,7 @@ import { setupServer } from "msw/node";
 import { PathParams, rest } from "msw";
 import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "react-query";
-import type { Vehicle } from "@/mocks";
+import type { Vehicle } from "@/types";
 import { Create } from "./Create";
 
 describe("Create", () => {
