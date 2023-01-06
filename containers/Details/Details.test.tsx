@@ -1,19 +1,19 @@
+import { IntlProvider } from "react-intl";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import {
-  vi,
-  describe,
-  it,
-  expect,
+  afterAll,
+  afterEach,
   beforeAll,
   beforeEach,
-  afterEach,
-  afterAll,
+  describe,
+  expect,
+  it,
+  vi,
 } from "vitest";
-import { screen, render, within, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
-import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { Details } from "./Details";
 
 const replace = vi.fn();
@@ -53,6 +53,11 @@ describe("Details", () => {
           refetchIntervalInBackground: false,
           retry: 0,
         },
+      },
+      logger: {
+        error: () => vi.fn(),
+        log: (...args) => console.log(...args),
+        warn: (...args) => console.warn(...args),
       },
     });
 
@@ -103,7 +108,7 @@ describe("Details", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/500: internal server error/i)).toBeInTheDocument();
     // Try again should reload
-    userEvent.click(screen.getByRole("button", { name: /try again/i }));
+    await userEvent.click(screen.getByRole("button", { name: /try again/i }));
     // Wait for the loading card
     expect(
       await screen.findByLabelText(/loading vehicle/i)
@@ -121,7 +126,7 @@ describe("Details", () => {
     );
     render(<Wrapper />);
     // Click the Delete button
-    userEvent.click(
+    await userEvent.click(
       await screen.findByRole("button", { name: /delete vehicle/i })
     );
     // Check the dialog is correct
@@ -132,7 +137,7 @@ describe("Details", () => {
       dialog.getByText(/are you really sure you want to delete this vehicle\?/i)
     ).toBeInTheDocument();
     // Delete
-    userEvent.click(dialog.getByRole("button", { name: /delete/i }));
+    await userEvent.click(dialog.getByRole("button", { name: /delete/i }));
     // We should route back to the home page
     await waitFor(() => expect(replace).toHaveBeenCalledWith("/"));
   });
@@ -148,7 +153,7 @@ describe("Details", () => {
     );
     render(<Wrapper />);
     // Click the Delete button
-    userEvent.click(
+    await userEvent.click(
       await screen.findByRole("button", { name: /delete vehicle/i })
     );
     // Check the dialog is correct
@@ -156,7 +161,7 @@ describe("Details", () => {
       screen.getByRole("dialog", { name: /delete vehicle/i })
     );
     // Delete
-    userEvent.click(dialog.getByRole("button", { name: /delete/i }));
+    await userEvent.click(dialog.getByRole("button", { name: /delete/i }));
     // We should get an error
     expect(
       await screen.findByText(/500: internal server error/i)
@@ -166,7 +171,7 @@ describe("Details", () => {
       screen.queryByRole("button", { name: /delete vehicle/i })
     ).not.toBeInTheDocument();
     // Clear the error
-    userEvent.click(screen.getByRole("button", { name: /close/i }));
+    await userEvent.click(screen.getByRole("button", { name: /close/i }));
     expect(
       await screen.findByRole("button", { name: /delete vehicle/i })
     ).toBeInTheDocument();

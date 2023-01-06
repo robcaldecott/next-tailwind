@@ -1,6 +1,6 @@
 import { FormattedMessage } from "react-intl";
-import { ErrorMessage } from "../ErrorMessage";
 import { Button } from "../Button";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface PageErrorProps {
   error: Response | null;

@@ -1,24 +1,24 @@
-import { vi, describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { describe, expect, test,vi } from "vitest";
 import { Button } from ".";
 
 describe("Button", () => {
-  test("click", () => {
+  test("click", async () => {
     const handleClick = vi.fn();
     render(<Button onClick={handleClick}>Label</Button>);
-    userEvent.click(screen.getByRole("button", { name: /label/i }));
+    await userEvent.click(screen.getByRole("button", { name: /label/i }));
     expect(handleClick).toHaveBeenCalled();
   });
 
-  test("disabled", () => {
+  test("disabled", async () => {
     const handleClick = vi.fn();
     render(
       <Button disabled onClick={handleClick}>
         Label
       </Button>
     );
-    userEvent.click(
+    await userEvent.click(
       screen.getByRole("button", { name: /label/i, hidden: true })
     );
     expect(handleClick).not.toHaveBeenCalled();

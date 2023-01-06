@@ -1,6 +1,6 @@
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Details } from "@/containers";
-import type { NextPage } from "next";
 
 const DetailsPage: NextPage = () => {
   const router = useRouter();

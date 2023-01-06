@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { SearchIcon } from "@heroicons/react/solid";
 import { TextFieldInput } from "../TextField";
 
 export interface SearchFieldProps extends ComponentPropsWithoutRef<"input"> {}
@@ -17,7 +17,7 @@ export const SearchField = ({
 
       {/* Icon */}
       <span className="flex absolute left-2 inset-y-0 items-center">
-        <SearchIcon
+        <MagnifyingGlassIcon
           aria-hidden="true"
           className={clsx(
             "h-6 w-6",

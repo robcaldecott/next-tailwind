@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { IntlProvider } from "react-intl";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { IntlProvider } from "react-intl";
+import { describe, expect,it } from "vitest";
 import { ErrorMessage } from ".";
 
 describe("ErrorMessage", () => {
@@ -19,7 +19,7 @@ describe("ErrorMessage", () => {
     expect(screen.getByText(/500: an error occurred/i)).toBeInTheDocument();
   });
 
-  it("renders with an action", () => {
+  it("renders with an action", async () => {
     render(
       <IntlProvider locale="en">
         <ErrorMessage
@@ -28,6 +28,6 @@ describe("ErrorMessage", () => {
         />
       </IntlProvider>
     );
-    userEvent.click(screen.getByRole("button", { name: /action/i }));
+    await userEvent.click(screen.getByRole("button", { name: /action/i }));
   });
 });

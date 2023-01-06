@@ -1,5 +1,5 @@
 import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider, setLogger } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import "../styles/globals.css";
 
@@ -28,6 +28,11 @@ export const decorators = [
           refetchIntervalInBackground: false,
           retry: false,
         },
+      },
+      logger: {
+        error: () => {},
+        log: (...args) => console.log(...args),
+        warn: (...args) => console.warn(...args),
       },
     });
 

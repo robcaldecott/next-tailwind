@@ -1,4 +1,4 @@
-import { ElementType, ComponentPropsWithRef } from "react";
+import { ComponentPropsWithRef,ElementType } from "react";
 import clsx from "clsx";
 
 interface PaperProps<C extends ElementType> {

@@ -3,5 +3,47 @@
     "next/core-web-vitals",
     "plugin:storybook/recommended",
     "plugin:testing-library/react"
+  ],
+  "plugins": ["simple-import-sort", "testing-library", "formatjs"],
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-duplicate-imports": "error",
+    "formatjs/enforce-default-message": ["error", "literal"],
+    "formatjs/enforce-placeholders": "error",
+    "formatjs/enforce-id": "error"
+  },
+  "overrides": [
+    // override "simple-import-sort" config
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // Packages `react` related packages come first.
+              [
+                "^react",
+                "^@?\\w",
+                // Internal packages.
+                "^(@|components|widgets|page-containers|utils|providers|constants)(/.*|$)",
+                // Side effect imports.
+                "^\\u0000",
+                // Parent imports. Put `..` last.
+                "^\\.\\.(?!/?$)",
+                "^\\.\\./?$",
+                // Other relative imports. Put same-folder imports and `.` last.
+                "^\\./(?=.*/)(?!/?$)",
+                "^\\.(?!/?$)",
+                "^\\./?$",
+                // Style imports.
+                "^.+\\.?(css)$"
+              ]
+            ]
+          }
+        ]
+      }
+    }
   ]
 }

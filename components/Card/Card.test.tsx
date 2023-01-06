@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { Card, CardHeader, CardContent, CardActions } from ".";
+import { describe, expect,it } from "vitest";
+import { Card, CardActions,CardContent, CardHeader } from ".";
 
 describe("Card", () => {
   it("renders", () => {

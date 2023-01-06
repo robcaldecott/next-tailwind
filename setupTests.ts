@@ -1,17 +1,16 @@
-import "whatwg-fetch";
-import { vi, expect, beforeAll, afterEach } from "vitest";
 import matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
-import { setLogger } from "react-query";
+import { afterEach, beforeAll, expect, vi } from "vitest";
+import "whatwg-fetch";
 
 expect.extend(matchers);
 
-beforeAll(() => {
-  setLogger({
-    error: () => vi.fn(),
-    log: (...args) => console.log(...args),
-    warn: (...args) => console.log(...args),
-  });
-});
+// beforeAll(() => {
+//   setLogger({
+//     error: () => vi.fn(),
+//     log: (...args) => console.log(...args),
+//     warn: (...args) => console.log(...args),
+//   });
+// });
 
 afterEach(cleanup);

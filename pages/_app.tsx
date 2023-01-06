@@ -1,10 +1,10 @@
-import "../styles/globals.css";
 import { useState } from "react";
-import type { AppProps } from "next/app";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { IntlProvider } from "react-intl";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { AppProps } from "next/app";
 import { Layout } from "@/components";
-import { ThemeProvider, FilterProvider } from "@/providers";
+import { FilterProvider, ThemeProvider } from "@/providers";
+import "../styles/globals.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());

@@ -1,19 +1,19 @@
+import { IntlProvider } from "react-intl";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import {
-  vi,
-  describe,
-  it,
-  expect,
+  afterAll,
+  afterEach,
   beforeAll,
   beforeEach,
-  afterEach,
-  afterAll,
+  describe,
+  expect,
+  it,
+  vi,
 } from "vitest";
-import { screen, render, within, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
-import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { FilterProvider } from "@/providers";
 import { Vehicles } from "./Vehicles";
 
@@ -57,6 +57,11 @@ describe("Vehicles", () => {
           retry: 0,
         },
       },
+      logger: {
+        error: () => vi.fn(),
+        log: (...args) => console.log(...args),
+        warn: (...args) => console.warn(...args),
+      },
     });
 
     return (
@@ -97,7 +102,7 @@ describe("Vehicles", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/500: internal server error/i)).toBeInTheDocument();
     // Try again should reload
-    userEvent.click(screen.getByRole("button", { name: /try again/i }));
+    await userEvent.click(screen.getByRole("button", { name: /try again/i }));
     // Wait for the loading card
     expect(
       await screen.findByLabelText(/loading vehicles/i)
@@ -109,7 +114,7 @@ describe("Vehicles", () => {
       rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
     );
     render(<Wrapper />);
-    userEvent.type(await screen.findByPlaceholderText(/search/i), "test");
+    await userEvent.type(await screen.findByPlaceholderText(/search/i), "test");
     expect(
       screen.getByRole("heading", { name: /no matching vehicles found\./i })
     ).toBeInTheDocument();

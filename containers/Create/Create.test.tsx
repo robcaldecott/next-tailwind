@@ -1,12 +1,16 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { screen, render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { setupServer } from "msw/node";
-import { PathParams, rest } from "msw";
 import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { PathParams, rest } from "msw";
+import { setupServer } from "msw/node";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { Vehicle } from "@/types";
 import { Create } from "./Create";
+
+vi.mock("next/router", () => ({
+  useRouter: () => ({ replace: vi.fn, push: vi.fn }),
+}));
 
 describe("Create", () => {
   const server = setupServer(
@@ -18,7 +22,13 @@ describe("Create", () => {
   beforeAll(() => server.listen());
   afterAll(() => server.close());
 
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    logger: {
+      error: () => vi.fn(),
+      log: (...args) => console.log(...args),
+      warn: (...args) => console.warn(...args),
+    },
+  });
 
   const Wrapper = () => (
     <IntlProvider locale="en">
@@ -28,7 +38,7 @@ describe("Create", () => {
     </IntlProvider>
   );
 
-  it("submits", () => {
+  it("submits", async () => {
     render(<Wrapper />);
     // Check for the "Home" link
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
@@ -37,29 +47,41 @@ describe("Create", () => {
       screen.getByRole("heading", { name: /create new vehicle/i })
     ).toBeInTheDocument();
     // Complete the form
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /make/i }), [
-      "Audi",
-    ]);
-    userEvent.type(screen.getByRole("textbox", { name: /model/i }), "A4");
-    userEvent.type(screen.getByRole("textbox", { name: /variant/i }), "Saloon");
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /fuel/i }), [
-      "Gasoline",
-    ]);
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /colour/i }), [
-      "Black",
-    ]);
-    userEvent.type(
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /make/i }),
+      ["Audi"]
+    );
+    await userEvent.type(screen.getByRole("textbox", { name: /model/i }), "A4");
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /variant/i }),
+      "Saloon"
+    );
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /fuel/i }),
+      ["Gasoline"]
+    );
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /colour/i }),
+      ["Black"]
+    );
+    await userEvent.type(
       screen.getByRole("textbox", { name: /registration number/i }),
       "ABC 123"
     );
-    userEvent.type(
+    await userEvent.type(
       screen.getByRole("textbox", { name: /vin/i }),
       "ABCDEF1234567890"
     );
-    userEvent.type(screen.getByRole("textbox", { name: /mileage/i }), "12345");
-    userEvent.type(screen.getByLabelText(/registration date/i), "31121999");
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /mileage/i }),
+      "12345"
+    );
+    await userEvent.type(
+      screen.getByLabelText(/registration date/i),
+      "1999-12-31"
+    );
     // Submit the form
-    userEvent.click(screen.getByRole("button", { name: /create/i }));
+    await userEvent.click(screen.getByRole("button", { name: /create/i }));
     // Check the buttons are disabled
     expect(screen.getByRole("button", { name: /create/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /cancel/i })).toBeDisabled();
@@ -78,32 +100,44 @@ describe("Create", () => {
     expect(screen.getByLabelText(/registration date/i)).toBeDisabled();
   });
 
-  it("resets the form", () => {
+  it("resets the form", async () => {
     render(<Wrapper />);
     // Complete the form
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /make/i }), [
-      "Audi",
-    ]);
-    userEvent.type(screen.getByRole("textbox", { name: /model/i }), "A4");
-    userEvent.type(screen.getByRole("textbox", { name: /variant/i }), "Saloon");
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /fuel/i }), [
-      "Gasoline",
-    ]);
-    userEvent.selectOptions(screen.getByRole("combobox", { name: /colour/i }), [
-      "Black",
-    ]);
-    userEvent.type(
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /make/i }),
+      ["Audi"]
+    );
+    await userEvent.type(screen.getByRole("textbox", { name: /model/i }), "A4");
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /variant/i }),
+      "Saloon"
+    );
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /fuel/i }),
+      ["Gasoline"]
+    );
+    await userEvent.selectOptions(
+      screen.getByRole("combobox", { name: /colour/i }),
+      ["Black"]
+    );
+    await userEvent.type(
       screen.getByRole("textbox", { name: /registration number/i }),
       "ABC 123"
     );
-    userEvent.type(
+    await userEvent.type(
       screen.getByRole("textbox", { name: /vin/i }),
       "ABCDEF1234567890"
     );
-    userEvent.type(screen.getByRole("textbox", { name: /mileage/i }), "12345");
-    userEvent.type(screen.getByLabelText(/registration date/i), "31121999");
+    await userEvent.type(
+      screen.getByRole("textbox", { name: /mileage/i }),
+      "12345"
+    );
+    await userEvent.type(
+      screen.getByLabelText(/registration date/i),
+      "31121999"
+    );
     // Reset the form
-    userEvent.click(screen.getByRole("button", { name: /reset/i }));
+    await userEvent.click(screen.getByRole("button", { name: /reset/i }));
     // Check all the fields are empty
     expect(screen.getByRole("combobox", { name: /make/i })).toHaveValue("");
     expect(screen.getByRole("textbox", { name: /model/i })).toHaveValue("");
@@ -121,7 +155,7 @@ describe("Create", () => {
   it("validates the form", async () => {
     render(<Wrapper />);
     // Submit the form
-    userEvent.click(screen.getByRole("button", { name: /create/i }));
+    await userEvent.click(screen.getByRole("button", { name: /create/i }));
     // Check all the fields are empty
     expect(
       await screen.findByText(/please select a make/i)

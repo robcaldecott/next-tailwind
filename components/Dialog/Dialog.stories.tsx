@@ -3,10 +3,10 @@ import { ComponentMeta } from "@storybook/react";
 import { Button } from "../Button";
 import {
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
+  DialogTitle,
 } from ".";
 
 export default {

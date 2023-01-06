@@ -1,14 +1,14 @@
+import { rest, RestRequest } from "msw";
+import { setupServer } from "msw/node";
 import {
-  vi,
-  test,
-  expect,
-  beforeAll,
   afterAll,
   afterEach,
+  beforeAll,
   describe,
+  expect,
+  test,
+  vi,
 } from "vitest";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 import { http } from ".";
 
 describe("http", () => {
@@ -36,48 +36,38 @@ describe("http", () => {
     expect(await http.delete("/api/test")).toEqual({ data: "hello, world!" });
   });
 
-  test("post", (done) => {
+  test("post", async () => {
     const body = { name: "Jane Doe", email: "jane@company.com" };
-    const mock = vi.fn((req, res, ctx) => {
-      try {
-        expect(req.headers.get("Content-Type")).toEqual("application/json");
-        expect(req.body).toEqual(body);
-        done();
-      } catch (e) {
-        done(e);
-      }
-      return res(ctx.json({}));
-    });
+    const mock = vi.fn((req, res, ctx) => res(ctx.json({})));
     server.use(rest.post("/api/test", mock));
-    http.post("/api/test", { json: body });
+
+    await http.post("/api/test", { json: body });
+
+    const req: RestRequest = mock.mock.calls[0][0];
+    expect(req.headers.get("content-type")).toEqual("application/json");
+    expect(req.body).toEqual(body);
   });
 
-  test("searchParams", (done) => {
-    const mock = vi.fn((req, res, ctx) => {
-      try {
-        expect(req.url.searchParams.get("param1")).toEqual("hello");
-        expect(req.url.searchParams.get("param2")).toEqual("true");
-        done();
-      } catch (e) {
-        done(e);
-      }
-      return res(ctx.json({}));
-    });
+  test("searchParams", async () => {
+    const mock = vi.fn((req, res, ctx) => res(ctx.json({})));
     server.use(rest.get("/api/test", mock));
-    http.get("/api/test", { searchParams: { param1: "hello", param2: true } });
+
+    await http.get("/api/test", {
+      searchParams: { param1: "hello", param2: true },
+    });
+
+    const req: RestRequest = mock.mock.calls[0][0];
+    expect(req.url.searchParams.get("param1")).toEqual("hello");
+    expect(req.url.searchParams.get("param2")).toEqual("true");
   });
 
-  test("headers", (done) => {
-    const mock = vi.fn((req, res, ctx) => {
-      try {
-        expect(req.headers.get("Authorization")).toEqual("Bearer TOKEN");
-        done();
-      } catch (e) {
-        done(e);
-      }
-      return res(ctx.json({}));
-    });
+  test("headers", async () => {
+    const mock = vi.fn((req, res, ctx) => res(ctx.json({})));
     server.use(rest.get("/api/test", mock));
-    http.get("/api/test", { headers: { Authorization: "Bearer TOKEN" } });
+
+    await http.get("/api/test", { headers: { Authorization: "Bearer TOKEN" } });
+
+    const req: RestRequest = mock.mock.calls[0][0];
+    expect(req.headers.get("Authorization")).toEqual("Bearer TOKEN");
   });
 });

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import { Paper } from "../Paper";
 import { Text } from "../Text";
 

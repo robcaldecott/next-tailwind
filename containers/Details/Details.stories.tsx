@@ -1,5 +1,5 @@
-import { Meta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { Meta } from "@storybook/react";
 import { Details } from ".";
 
 export default {

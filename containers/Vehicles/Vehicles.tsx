@@ -1,25 +1,25 @@
-import { useState, useEffect, ReactNode } from "react";
-import { useIntl, FormattedMessage } from "react-intl";
+import { ReactNode,useEffect, useState } from "react";
+import { FormattedMessage,useIntl } from "react-intl";
 import {
   ChevronRightIcon,
   InformationCircleIcon,
-} from "@heroicons/react/solid";
-import Link from "next/link";
+} from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import Link from "next/link";
 import {
-  Paper,
   List,
   ListItem,
-  ListItemText,
   ListItemLink,
+  ListItemText,
+  PageError,
+  Paper,
+  SearchField,
   Skeleton,
   Text,
-  PageError,
-  SearchField,
 } from "@/components";
-import type { Vehicle } from "@/types";
-import { useVehicles } from "@/queries";
 import { useFilter } from "@/providers";
+import { useVehicles } from "@/queries";
+import type { Vehicle } from "@/types";
 
 const Loading = () => {
   const intl = useIntl();
@@ -132,7 +132,12 @@ export const Data = ({ data = [] }: DataProps) => {
       ) : (
         <List dividers>
           {items.map((vehicle) => (
-            <Link key={vehicle.id} href={`/vehicles/${vehicle.id}`} passHref>
+            <Link
+              key={vehicle.id}
+              href={`/vehicles/${vehicle.id}`}
+              passHref
+              legacyBehavior
+            >
               <ListItemLink>
                 <ListItemText
                   primary={`${vehicle.manufacturer} ${vehicle.model} ${vehicle.type} ${vehicle.fuel}`}

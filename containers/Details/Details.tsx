@@ -1,20 +1,20 @@
-import { useState } from "react";
 import type { ReactNode } from "react";
-import { useIntl, FormattedMessage, FormattedNumber } from "react-intl";
+import { useState } from "react";
+import { FormattedMessage, FormattedNumber,useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import {
-  Breadcrumbs,
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  Skeleton,
-  Button,
-  PageError,
   Alert,
+  Breadcrumbs,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  PageError,
+  Skeleton,
 } from "@/components";
+import { useDeleteVehicle,useVehicle } from "@/queries";
 import type { Vehicle } from "@/types";
-import { useVehicle, useDeleteVehicle } from "@/queries";
 import { DeleteDialog } from "./DeleteDialog";
 
 const Loading = () => {

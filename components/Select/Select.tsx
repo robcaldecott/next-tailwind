@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { ChevronDownIcon } from "@heroicons/react/solid";
-import { TextFieldLabel, TextFieldError, TextFieldInput } from "../TextField";
+import { TextFieldError, TextFieldInput,TextFieldLabel } from "../TextField";
 
 export interface SelectProps extends ComponentPropsWithoutRef<"select"> {
   label?: ReactNode;

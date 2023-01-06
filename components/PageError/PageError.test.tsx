@@ -1,11 +1,11 @@
-import { vi, describe, it, expect } from "vitest";
+import { IntlProvider } from "react-intl";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { IntlProvider } from "react-intl";
+import { describe, expect, it, vi } from "vitest";
 import { PageError } from ".";
 
 describe("PageError", () => {
-  it("renders", () => {
+  it("renders", async () => {
     const handleRefetch = vi.fn();
     render(
       <IntlProvider locale="en">
@@ -19,7 +19,7 @@ describe("PageError", () => {
       screen.getByRole("heading", { name: /something went wrong!/i })
     ).toBeInTheDocument();
     expect(screen.getByText(/500: an error occurred/i)).toBeInTheDocument();
-    userEvent.click(screen.getByRole("button", { name: /try again/i }));
+    await userEvent.click(screen.getByRole("button", { name: /try again/i }));
     expect(handleRefetch).toHaveBeenCalled();
   });
 });

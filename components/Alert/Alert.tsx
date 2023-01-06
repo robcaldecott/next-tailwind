@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { Text } from "../Text";
 

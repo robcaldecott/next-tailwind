@@ -1,5 +1,5 @@
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { PlusIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { Fab } from "./Fab";
 
@@ -9,7 +9,7 @@ export default {
 } as ComponentMeta<typeof Fab>;
 
 const Template: ComponentStory<typeof Fab> = (args) => (
-  <Link href="/" passHref>
+  <Link href="/" passHref legacyBehavior>
     <Fab {...args} />
   </Link>
 );

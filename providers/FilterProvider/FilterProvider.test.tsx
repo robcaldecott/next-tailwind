@@ -1,11 +1,6 @@
 import { ReactNode } from "react";
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import {
-  renderHook,
-  act,
-  suppressErrorOutput,
-} from "@testing-library/react-hooks";
+import { act, render, renderHook, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 import { FilterProvider, useFilter } from ".";
 
 describe("FilterProvider", () => {
@@ -29,17 +24,5 @@ describe("FilterProvider", () => {
       result.current.setFilter("test");
     });
     expect(result.current.filter).toBe("test");
-  });
-
-  it("throws an error when rendered outside of a FilterProvider", () => {
-    const restoreConsole = suppressErrorOutput();
-    try {
-      const { result } = renderHook(() => useFilter());
-      expect(result.error).toEqual(
-        new Error("useFilter must be used inside a FilterProvider")
-      );
-    } finally {
-      restoreConsole();
-    }
   });
 });

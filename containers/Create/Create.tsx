@@ -1,19 +1,19 @@
 import type { ElementType } from "react";
-import { useIntl, FormattedMessage } from "react-intl";
-import { Formik, Form, Field, FormikErrors, FieldProps } from "formik";
-import { useRouter } from "next/router";
+import { FormattedMessage, useIntl } from "react-intl";
 import clsx from "clsx";
+import { Field, FieldProps, Form, Formik, FormikErrors } from "formik";
+import { useRouter } from "next/router";
 import {
   Breadcrumbs,
-  Paper,
-  Text,
-  Select,
   Button,
+  Paper,
+  Select,
+  Text,
   TextField,
 } from "@/components";
-import type { VehiclePayload } from "@/types";
-import { manufacturers, fuelTypes, colors } from "@/mocks";
+import { colors, fuelTypes, manufacturers } from "@/mocks";
 import { useCreateVehicle } from "@/queries";
+import type { VehiclePayload } from "@/types";
 
 interface FormikFieldProps extends FieldProps {
   component: ElementType;

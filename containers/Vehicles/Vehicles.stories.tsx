@@ -1,8 +1,8 @@
-import { Meta, Story } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import { Meta, Story } from "@storybook/react";
+import { vehicles } from "@/mocks";
 import { FilterProvider } from "@/providers";
 import { Vehicles } from ".";
-import { vehicles } from "@/mocks";
 
 export default {
   title: "Containers/Vehicles",

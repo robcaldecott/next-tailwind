@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import Head from "next/head";
-import { MoonIcon, SunIcon } from "@heroicons/react/solid";
-import { AppBar } from "../AppBar";
-import { Text } from "../Text";
-import { IconButton } from "../IconButton";
 import { useTheme } from "@/providers";
+import { AppBar } from "../AppBar";
+import { IconButton } from "../IconButton";
+import { Text } from "../Text";
 
 interface LayoutProps {
   children: ReactNode;

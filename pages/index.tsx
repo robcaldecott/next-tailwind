@@ -1,15 +1,15 @@
+import { FormattedMessage } from "react-intl";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import type { NextPage } from "next";
 import Link from "next/link";
-import { FormattedMessage } from "react-intl";
-import { Vehicles } from "@/containers";
 import { ResponsiveFab } from "@/components";
-import { PlusIcon } from "@heroicons/react/solid";
+import { Vehicles } from "@/containers";
 
 const Home: NextPage = () => (
   <>
     <Vehicles fabPadding />
 
-    <Link href="/create" passHref>
+    <Link href="/create" passHref legacyBehavior>
       <ResponsiveFab
         icon={PlusIcon}
         label={

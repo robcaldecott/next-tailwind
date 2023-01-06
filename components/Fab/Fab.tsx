@@ -1,5 +1,9 @@
-import { ElementType, forwardRef, ReactNode } from "react";
-import type { ComponentPropsWithoutRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ElementType,
+  forwardRef,
+  ReactNode,
+} from "react";
 import clsx from "clsx";
 
 interface FabProps extends Omit<ComponentPropsWithoutRef<"a">, "children"> {
@@ -8,7 +12,7 @@ interface FabProps extends Omit<ComponentPropsWithoutRef<"a">, "children"> {
 }
 
 export const Fab = forwardRef<HTMLAnchorElement, FabProps>(
-  ({ icon: Icon, label, className, children, ...props }, ref) => (
+  ({ icon: Icon, label, className, ...props }, ref) => (
     <a
       ref={ref}
       className={clsx(

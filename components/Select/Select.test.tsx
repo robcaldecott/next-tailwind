@@ -1,6 +1,6 @@
-import { vi, describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { describe, expect,it, vi } from "vitest";
 import { Select } from ".";
 
 describe("Select", () => {
@@ -15,7 +15,7 @@ describe("Select", () => {
     </>
   );
 
-  it("renders", () => {
+  it("renders", async () => {
     const handleChange = vi.fn();
     render(
       <Select label="Label" value="apples" onChange={handleChange}>
@@ -36,7 +36,7 @@ describe("Select", () => {
       select.getByRole("option", { name: /oranges/i, selected: false })
     ).toBeInTheDocument();
 
-    userEvent.selectOptions(
+    await userEvent.selectOptions(
       screen.getByRole("combobox", { name: /label/i }),
       "oranges"
     );

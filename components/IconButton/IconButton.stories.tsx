@@ -1,5 +1,5 @@
+import { HeartIcon } from "@heroicons/react/24/solid";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { HeartIcon } from "@heroicons/react/solid";
 import { IconButton } from ".";
 
 export default {

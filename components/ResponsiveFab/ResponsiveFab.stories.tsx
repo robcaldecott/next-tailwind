@@ -1,5 +1,5 @@
+import { StarIcon } from "@heroicons/react/24/solid";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { ResponsiveFab } from ".";
 
@@ -24,7 +24,7 @@ export default {
 } as ComponentMeta<typeof ResponsiveFab>;
 
 const Template: ComponentStory<typeof ResponsiveFab> = (args) => (
-  <Link href="/" passHref>
+  <Link href="/" passHref legacyBehavior>
     <ResponsiveFab {...args} />
   </Link>
 );
