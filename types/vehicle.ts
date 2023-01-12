@@ -12,4 +12,4 @@ export interface Vehicle {
 }
 
 // When we create a new vehicle no ID is required.
-export interface VehiclePayload extends Omit<Vehicle, "id"> {}
+export type VehiclePayload = Omit<Vehicle, "id">;

@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
 import { Text } from "../Text";
 
-interface CardProps extends ComponentPropsWithoutRef<"div"> {}
+type CardProps = ComponentPropsWithoutRef<"div">;
 
 export const Card = ({ className, ...props }: CardProps) => (
   <div
@@ -59,7 +59,7 @@ export const CardContent = ({ divider, ...props }: CardContentProps) => (
   />
 );
 
-interface CardActionsProps extends ComponentPropsWithoutRef<"div"> {}
+type CardActionsProps = ComponentPropsWithoutRef<"div">;
 
 export const CardActions = ({ className, ...props }: CardActionsProps) => (
   <div

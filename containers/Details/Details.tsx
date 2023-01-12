@@ -215,7 +215,7 @@ export const Details = ({ id }: DetailsProps) => {
   return (
     <div className="mx-auto max-w-3xl">
       {isLoading && <Loading />}
-      {isSuccess && <Data data={data!} />}
+      {isSuccess && <Data data={data} />}
       {isError && <Error error={error} refetch={refetch} />}
     </div>
   );

@@ -1,10 +1,17 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "next/core-web-vitals",
     "plugin:storybook/recommended",
-    "plugin:testing-library/react"
+    "plugin:testing-library/react",
+    "plugin:@typescript-eslint/recommended"
   ],
-  "plugins": ["simple-import-sort", "testing-library", "formatjs"],
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "testing-library",
+    "formatjs"
+  ],
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

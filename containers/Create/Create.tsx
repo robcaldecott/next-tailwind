@@ -92,7 +92,7 @@ export const Create = () => {
             } as Values
           }
           validate={(values) => {
-            let errors: FormikErrors<Values> = {};
+            const errors: FormikErrors<Values> = {};
 
             if (values.manufacturer === "") {
               errors.manufacturer = intl.formatMessage({

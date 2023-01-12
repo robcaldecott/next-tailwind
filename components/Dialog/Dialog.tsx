@@ -42,7 +42,7 @@ export const Dialog = ({ open, children, onClose, ...props }: DialogProps) => {
   ) : null;
 };
 
-interface DialogTitleProps extends ComponentPropsWithoutRef<"h2"> {}
+type DialogTitleProps = ComponentPropsWithoutRef<"h2">;
 
 export const DialogTitle = ({ children, ...props }: DialogTitleProps) => (
   <h2
@@ -53,13 +53,13 @@ export const DialogTitle = ({ children, ...props }: DialogTitleProps) => (
   </h2>
 );
 
-interface DialogContentProps extends ComponentPropsWithoutRef<"div"> {}
+type DialogContentProps = ComponentPropsWithoutRef<"div">;
 
 export const DialogContent = (props: DialogContentProps) => (
   <div className="px-4 pb-4" {...props} />
 );
 
-interface DialogContentTextProps extends ComponentPropsWithoutRef<"p"> {}
+type DialogContentTextProps = ComponentPropsWithoutRef<"p">;
 
 export const DialogContentText = (props: DialogContentTextProps) => (
   <p
@@ -68,7 +68,7 @@ export const DialogContentText = (props: DialogContentTextProps) => (
   />
 );
 
-interface DialogActionsProps extends ComponentPropsWithoutRef<"div"> {}
+type DialogActionsProps = ComponentPropsWithoutRef<"div">;
 
 export const DialogActions = (props: DialogActionsProps) => (
   <div className="flex items-center justify-end space-x-2 p-2" {...props} />

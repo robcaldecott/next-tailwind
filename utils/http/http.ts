@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export interface HTTPOptions extends RequestInit {
   searchParams?: Record<string, any>;
   headers?: HeadersInit;

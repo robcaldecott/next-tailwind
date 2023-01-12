@@ -27,7 +27,7 @@ export const TextFieldLabel = ({
   />
 );
 
-export interface TextFieldErrorProps extends ComponentPropsWithoutRef<"span"> {}
+export type TextFieldErrorProps = ComponentPropsWithoutRef<"span">;
 
 export const TextFieldError = (props: TextFieldErrorProps) => (
   <span

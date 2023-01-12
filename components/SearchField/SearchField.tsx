@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { TextFieldInput } from "../TextField";
 
-export interface SearchFieldProps extends ComponentPropsWithoutRef<"input"> {}
+export type SearchFieldProps = ComponentPropsWithoutRef<"input">;
 
 export const SearchField = ({
   className,

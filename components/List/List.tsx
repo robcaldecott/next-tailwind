@@ -32,7 +32,6 @@ export const ListItem = <C extends ElementType = "li">({
   component,
   button,
   className,
-  divider,
   ...props
 }: ListItemProps<C> &
   Omit<ComponentPropsWithoutRef<C>, keyof ListItemProps<C>>) => {
@@ -49,7 +48,7 @@ export const ListItem = <C extends ElementType = "li">({
   );
 };
 
-interface ListItemLinkProps extends ComponentPropsWithoutRef<"a"> {}
+type ListItemLinkProps = ComponentPropsWithoutRef<"a">;
 
 export const ListItemLink = forwardRef<HTMLAnchorElement, ListItemLinkProps>(
   ({ className, ...props }, ref) => (

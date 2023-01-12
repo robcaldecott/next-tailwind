@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 
-interface AppBarProps extends ComponentPropsWithoutRef<"header"> {}
+type AppBarProps = ComponentPropsWithoutRef<"header">;
 
 export const AppBar = ({ className, ...props }: AppBarProps) => (
   <header
