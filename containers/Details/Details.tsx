@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
-import { FormattedMessage, FormattedNumber,useIntl } from "react-intl";
+import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import {
   Alert,
@@ -13,7 +13,7 @@ import {
   PageError,
   Skeleton,
 } from "@/components";
-import { useDeleteVehicle,useVehicle } from "@/queries";
+import { useDeleteVehicle, useVehicle } from "@/queries";
 import type { Vehicle } from "@/types";
 import { DeleteDialog } from "./DeleteDialog";
 
@@ -51,9 +51,9 @@ interface SwatchProps {
 }
 
 const Swatch = ({ color }: SwatchProps) => (
-  <div className="flex space-x-1 items-center">
+  <div className="flex items-center space-x-1">
     <span
-      className="h-4 w-4 rounded-full inline-block border border-slate-300"
+      className="inline-block h-4 w-4 rounded-full border border-slate-300"
       style={{ backgroundColor: color.replace(/ /g, "") }}
     />
     <span>{color.charAt(0).toUpperCase() + color.slice(1)}</span>
@@ -70,7 +70,7 @@ const Field = ({ id, label, value }: FieldProps) => (
   <>
     <dt
       id={id}
-      className="font-sans text-base font-medium mt-4 first:mt-0 text-slate-900 dark:text-white"
+      className="mt-4 font-sans text-base font-medium text-slate-900 first:mt-0 dark:text-white"
     >
       {label}
     </dt>
@@ -213,7 +213,7 @@ export const Details = ({ id }: DetailsProps) => {
     useVehicle(id);
 
   return (
-    <div className="max-w-3xl mx-auto">
+    <div className="mx-auto max-w-3xl">
       {isLoading && <Loading />}
       {isSuccess && <Data data={data!} />}
       {isError && <Error error={error} refetch={refetch} />}

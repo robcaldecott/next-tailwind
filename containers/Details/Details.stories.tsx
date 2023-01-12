@@ -6,7 +6,7 @@ export default {
   title: "Containers/Details",
   decorators: [
     (Story) => (
-      <div className="max-w-3xl mx-auto">
+      <div className="mx-auto max-w-3xl">
         <Story />
       </div>
     ),

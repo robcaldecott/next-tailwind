@@ -8,7 +8,7 @@
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "no-duplicate-imports": "error",
+    "import/no-duplicates": "error",
     "formatjs/enforce-default-message": ["error", "literal"],
     "formatjs/enforce-placeholders": "error",
     "formatjs/enforce-id": "error"

@@ -1,7 +1,7 @@
 import { ComponentMeta } from "@storybook/react";
 import { Button } from "../Button";
 import { Text } from "../Text";
-import { Card, CardActions,CardContent, CardHeader } from ".";
+import { Card, CardActions, CardContent, CardHeader } from ".";
 
 export default {
   title: "Components/Card",

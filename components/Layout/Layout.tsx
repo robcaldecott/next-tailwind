@@ -35,7 +35,7 @@ export const Layout = ({ children }: LayoutProps) => {
         />
       </AppBar>
 
-      <main className="max-w-7xl p-4 mx-auto">{children}</main>
+      <main className="mx-auto max-w-7xl p-4">{children}</main>
     </>
   );
 };

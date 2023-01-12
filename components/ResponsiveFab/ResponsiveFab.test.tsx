@@ -1,6 +1,6 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 import { render, screen } from "@testing-library/react";
-import { describe, expect,it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ResponsiveFab } from ".";
 
 describe("ResponsiveFab", () => {

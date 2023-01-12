@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory,Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { Paper } from "../Paper";
 import { List, ListItem, ListItemText } from ".";
 
