@@ -5,7 +5,7 @@ import { Paper } from "../Paper";
 import { Text } from "../Text";
 
 interface ErrorMessageProps {
-  error: Response | null;
+  error: Error | null;
   action?: ReactNode | undefined;
 }
 
@@ -26,7 +26,7 @@ export function ErrorMessage(props: ErrorMessageProps) {
 
       {props.error && (
         <Text variant="body1" align="center" color="secondary">
-          {`${props.error.status}: ${props.error.statusText}`}
+          {`${props.error.message}`}
         </Text>
       )}
 

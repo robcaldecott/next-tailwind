@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ky from "ky";
 import { useRouter } from "next/router";
 import {
   Alert,
@@ -13,7 +15,6 @@ import {
   PageError,
   Skeleton,
 } from "@/components";
-import { useDeleteVehicle, useVehicle } from "@/queries";
 import type { Vehicle } from "@/types";
 import { DeleteDialog } from "./DeleteDialog";
 
@@ -92,9 +93,38 @@ interface DataProps {
 }
 
 function Data(props: DataProps) {
+  const queryClient = useQueryClient();
   const intl = useIntl();
   const [showDialog, setShowDialog] = useState(false);
-  const { mutate, isError, error, reset } = useDeleteVehicle();
+  const { mutate, isError, error, reset } = useMutation<
+    Vehicle,
+    Error,
+    string,
+    Vehicle[]
+  >((id) => ky.delete(`/api/vehicles/${id}`).json(), {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries(["vehicles"]);
+      // Remove the vehicles immediately
+      const previous = queryClient.getQueryData<Vehicle[]>(["vehicles"]);
+      if (previous) {
+        queryClient.setQueryData(
+          ["vehicles"],
+          previous.filter((vehicle) => vehicle.id !== id)
+        );
+      }
+      return previous;
+    },
+    onError: (error, id, context) => {
+      // Revert the original list of vehicles on error
+      if (context) {
+        queryClient.setQueryData(["vehicles"], context);
+      }
+    },
+    onSettled: () => {
+      // Fetch the list of new vehicles
+      queryClient.invalidateQueries(["vehicles"]);
+    },
+  });
   const router = useRouter();
 
   return (
@@ -165,7 +195,7 @@ function Data(props: DataProps) {
           {isError ? (
             <Alert
               grow
-              label={`${error?.status}: ${error?.statusText}`}
+              label={error.message}
               action={
                 <Button variant="secondary" onClick={reset}>
                   <FormattedMessage id="close" defaultMessage="Close" />
@@ -213,8 +243,13 @@ interface DetailsProps {
 }
 
 export const Details = ({ id }: DetailsProps) => {
-  const { isLoading, isSuccess, data, isError, error, refetch } =
-    useVehicle(id);
+  const { isLoading, isSuccess, data, isError, error, refetch } = useQuery<
+    Vehicle,
+    Error
+  >({
+    queryKey: ["vehicle", id],
+    queryFn: () => ky.get(`/api/vehicles/${id}`).json(),
+  });
 
   return (
     <div className="mx-auto max-w-3xl">

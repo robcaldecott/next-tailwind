@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof ErrorMessage> = (args) => (
   <ErrorMessage {...args} />
 );
 
-const error = { status: 500, statusText: "An error occurred" } as Response;
+const error = new Error("An error occurred");
 
 export const WithoutAction = Template.bind({});
 WithoutAction.args = {

@@ -4,7 +4,9 @@ import {
   ChevronRightIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
+import ky from "ky";
 import Link from "next/link";
 import {
   List,
@@ -18,7 +20,6 @@ import {
   Text,
 } from "@/components";
 import { useFilter } from "@/providers";
-import { useVehicles } from "@/queries";
 import type { Vehicle } from "@/types";
 
 function Loading() {
@@ -165,7 +166,13 @@ interface VehiclesProps {
 }
 
 export function Vehicles(props: VehiclesProps) {
-  const { isLoading, isSuccess, data, isError, error, refetch } = useVehicles();
+  const { isLoading, isSuccess, data, isError, error, refetch } = useQuery<
+    Array<Vehicle>,
+    Error
+  >({
+    queryKey: ["vehicles"],
+    queryFn: () => ky.get("/api/vehicles").json(),
+  });
 
   return (
     <div className={clsx("mx-auto max-w-5xl", props.fabPadding && "mb-24")}>

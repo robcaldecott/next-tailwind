@@ -3,7 +3,7 @@ import { Button } from "../Button";
 import { ErrorMessage } from "../ErrorMessage";
 
 interface PageErrorProps {
-  error: Response | null;
+  error: Error | null;
   refetch: () => void;
 }
 

@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import ky from "ky";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import {
@@ -12,8 +14,7 @@ import {
   TextField,
 } from "@/components";
 import { colors, fuelTypes, manufacturers } from "@/mocks";
-import { useCreateVehicle } from "@/queries";
-import type { VehiclePayload } from "@/types";
+import type { Vehicle, VehiclePayload } from "@/types";
 
 function schema(intl: IntlShape) {
   return z.object({
@@ -84,7 +85,9 @@ function schema(intl: IntlShape) {
 export function Create() {
   const intl = useIntl();
   const router = useRouter();
-  const { mutate, isLoading } = useCreateVehicle();
+  const { mutate, isLoading } = useMutation<Vehicle, Response, VehiclePayload>(
+    (body) => ky.post("/api/vehicles", { json: body }).json()
+  );
   const {
     handleSubmit,
     register,

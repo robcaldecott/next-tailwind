@@ -106,7 +106,7 @@ describe("Details", () => {
     expect(
       await screen.findByRole("heading", { name: /something went wrong!/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/500: internal server error/i)).toBeInTheDocument();
+    expect(screen.getByText(/internal server error/i)).toBeInTheDocument();
     // Try again should reload
     await userEvent.click(screen.getByRole("button", { name: /try again/i }));
     // Wait for the loading card
@@ -164,7 +164,7 @@ describe("Details", () => {
     await userEvent.click(dialog.getByRole("button", { name: /delete/i }));
     // We should get an error
     expect(
-      await screen.findByText(/500: internal server error/i)
+      await screen.findByText(/internal server error/i)
     ).toBeInTheDocument();
     // The Delete Vehicle button should be gone
     expect(

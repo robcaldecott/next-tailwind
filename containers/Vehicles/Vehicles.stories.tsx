@@ -21,9 +21,9 @@ export const Empty: Story = () => <Vehicles.Data data={[]} />;
 
 export const Data: Story = () => <Vehicles.Data data={vehicles} />;
 
-export const Error: Story = () => (
+export const LoadError: Story = () => (
   <Vehicles.Error
-    error={{ status: 500, statusText: "An error occurred" } as Response}
+    error={new Error("An error occurred")}
     refetch={action("refetch")}
   />
 );

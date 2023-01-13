@@ -10,7 +10,7 @@ describe("PageError", () => {
     render(
       <IntlProvider locale="en">
         <PageError
-          error={{ status: 500, statusText: "An error occurred" } as Response}
+          error={new Error("An error occurred")}
           refetch={handleRefetch}
         />
       </IntlProvider>
@@ -18,7 +18,7 @@ describe("PageError", () => {
     expect(
       screen.getByRole("heading", { name: /something went wrong!/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/500: an error occurred/i)).toBeInTheDocument();
+    expect(screen.getByText(/an error occurred/i)).toBeInTheDocument();
     await userEvent.click(screen.getByRole("button", { name: /try again/i }));
     expect(handleRefetch).toHaveBeenCalled();
   });

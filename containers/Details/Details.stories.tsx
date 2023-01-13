@@ -32,9 +32,9 @@ export const Data = () => (
   />
 );
 
-export const Error = () => (
+export const LoadError = () => (
   <Details.Error
-    error={{ status: 500, statusText: "An error occurred" } as Response}
+    error={new Error("An error occurred")}
     refetch={action("refetch")}
   />
 );
