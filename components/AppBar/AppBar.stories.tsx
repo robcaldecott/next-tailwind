@@ -10,7 +10,7 @@ export default {
   },
 } as ComponentMeta<typeof AppBar>;
 
-const Template: ComponentStory<typeof AppBar> = ({ children, ...args }) => (
+const Template: ComponentStory<typeof AppBar> = (args) => (
   <AppBar {...args}>
     <Text component="h1" variant="h3" flexGrow={1} color="inherit">
       App Header
