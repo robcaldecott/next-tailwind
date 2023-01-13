@@ -17,7 +17,7 @@ import { useDeleteVehicle, useVehicle } from "@/queries";
 import type { Vehicle } from "@/types";
 import { DeleteDialog } from "./DeleteDialog";
 
-const Loading = () => {
+function Loading() {
   const intl = useIntl();
 
   return (
@@ -44,21 +44,23 @@ const Loading = () => {
       </Card>
     </>
   );
-};
+}
 
 interface SwatchProps {
   color: string;
 }
 
-const Swatch = ({ color }: SwatchProps) => (
-  <div className="flex items-center space-x-1">
-    <span
-      className="inline-block h-4 w-4 rounded-full border border-slate-300"
-      style={{ backgroundColor: color.replace(/ /g, "") }}
-    />
-    <span>{color.charAt(0).toUpperCase() + color.slice(1)}</span>
-  </div>
-);
+function Swatch(props: SwatchProps) {
+  return (
+    <div className="flex items-center space-x-1">
+      <span
+        className="inline-block h-4 w-4 rounded-full border border-slate-300"
+        style={{ backgroundColor: props.color.replace(/ /g, "") }}
+      />
+      <span>{props.color.charAt(0).toUpperCase() + props.color.slice(1)}</span>
+    </div>
+  );
+}
 
 interface FieldProps {
   id: string;
@@ -66,28 +68,30 @@ interface FieldProps {
   value: ReactNode;
 }
 
-const Field = ({ id, label, value }: FieldProps) => (
-  <>
-    <dt
-      id={id}
-      className="mt-4 font-sans text-base font-medium text-slate-900 first:mt-0 dark:text-white"
-    >
-      {label}
-    </dt>
-    <dd
-      className="font-sans text-base font-normal text-slate-500 dark:text-slate-300"
-      aria-labelledby={id}
-    >
-      {value}
-    </dd>
-  </>
-);
+function Field(props: FieldProps) {
+  return (
+    <>
+      <dt
+        id={props.id}
+        className="mt-4 font-sans text-base font-medium text-slate-900 first:mt-0 dark:text-white"
+      >
+        {props.label}
+      </dt>
+      <dd
+        className="font-sans text-base font-normal text-slate-500 dark:text-slate-300"
+        aria-labelledby={props.id}
+      >
+        {props.value}
+      </dd>
+    </>
+  );
+}
 
 interface DataProps {
   data: Vehicle;
 }
 
-const Data = ({ data }: DataProps) => {
+function Data(props: DataProps) {
   const intl = useIntl();
   const [showDialog, setShowDialog] = useState(false);
   const { mutate, isError, error, reset } = useDeleteVehicle();
@@ -95,7 +99,7 @@ const Data = ({ data }: DataProps) => {
 
   return (
     <>
-      <Breadcrumbs registrationNumber={data.registrationNumber} />
+      <Breadcrumbs registrationNumber={props.data.registrationNumber} />
 
       <Card
         aria-label={intl.formatMessage({
@@ -104,8 +108,8 @@ const Data = ({ data }: DataProps) => {
         })}
       >
         <CardHeader
-          title={`${data.manufacturer} ${data.model} ${data.type}`}
-          subheader={data.registrationNumber}
+          title={`${props.data.manufacturer} ${props.data.model} ${props.data.type}`}
+          subheader={props.data.registrationNumber}
           divider
         />
         <CardContent divider>
@@ -114,28 +118,28 @@ const Data = ({ data }: DataProps) => {
             <Field
               id="color"
               label={<FormattedMessage id="color" defaultMessage="Colour" />}
-              value={<Swatch color={data.color} />}
+              value={<Swatch color={props.data.color} />}
             />
 
             {/* Fuel */}
             <Field
               id="fuel"
               label={<FormattedMessage id="fuel" defaultMessage="Fuel" />}
-              value={data.fuel}
+              value={props.data.fuel}
             />
 
             {/* VIN */}
             <Field
               id="vin"
               label={<FormattedMessage id="vin" defaultMessage="VIN" />}
-              value={data.vin}
+              value={props.data.vin}
             />
 
             {/* Mileage */}
             <Field
               id="mileage"
               label={<FormattedMessage id="mileage" defaultMessage="Mileage" />}
-              value={<FormattedNumber value={data.mileage} />}
+              value={<FormattedNumber value={props.data.mileage} />}
             />
 
             {/* Registration date */}
@@ -151,7 +155,7 @@ const Data = ({ data }: DataProps) => {
                 <FormattedMessage
                   id="fullRegistrationDate"
                   defaultMessage="{date, date, full}"
-                  values={{ date: new Date(data.registrationDate) }}
+                  values={{ date: new Date(props.data.registrationDate) }}
                 />
               }
             />
@@ -188,7 +192,7 @@ const Data = ({ data }: DataProps) => {
         open={showDialog}
         onClose={() => setShowDialog(false)}
         onDelete={() => {
-          mutate(data.id, {
+          mutate(props.data.id, {
             onSuccess: () => {
               router.replace("/");
             },
@@ -200,7 +204,7 @@ const Data = ({ data }: DataProps) => {
       />
     </>
   );
-};
+}
 
 const Error = PageError;
 

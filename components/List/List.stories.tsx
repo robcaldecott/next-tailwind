@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Paper } from "../Paper";
-import { List, ListItem, ListItemText } from ".";
+import { List, ListItem, ListItemLink, ListItemText } from ".";
 
 export default {
   title: "Components/List",
@@ -49,14 +49,14 @@ Static.args = {
   padding: false,
 };
 
-export const Buttons = Template.bind({});
-Buttons.args = {
+export const Links = Template.bind({});
+Links.args = {
   children: (
     <>
       {data.map(({ primary, secondary }, index) => (
-        <ListItem key={index} button component="button">
+        <ListItemLink key={index} href="/">
           <ListItemText primary={primary} secondary={secondary} />
-        </ListItem>
+        </ListItemLink>
       ))}
     </>
   ),

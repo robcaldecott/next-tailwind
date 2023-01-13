@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { List, ListItem, ListItemText } from ".";
+import { List, ListItem, ListItemLink, ListItemText } from ".";
 
 describe("List", () => {
   it("renders as a list", () => {
@@ -16,16 +16,16 @@ describe("List", () => {
     expect(screen.getByRole("listitem")).toHaveTextContent(/secondary/i);
   });
 
-  it("renders as a button", () => {
+  it("renders as a link", () => {
     render(
       <List>
-        <ListItem button component="button">
+        <ListItemLink href="/">
           <ListItemText primary="Primary" secondary="Secondary" />
-        </ListItem>
+        </ListItemLink>
       </List>
     );
     expect(screen.getByRole("list")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveTextContent(/primary/i);
-    expect(screen.getByRole("button")).toHaveTextContent(/secondary/i);
+    expect(screen.getByRole("link")).toHaveTextContent(/primary/i);
+    expect(screen.getByRole("link")).toHaveTextContent(/secondary/i);
   });
 });

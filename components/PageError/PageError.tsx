@@ -7,13 +7,15 @@ interface PageErrorProps {
   refetch: () => void;
 }
 
-export const PageError = ({ error, refetch }: PageErrorProps) => (
-  <ErrorMessage
-    error={error}
-    action={
-      <Button onClick={() => refetch()}>
-        <FormattedMessage id="tryAgain" defaultMessage="Try again" />
-      </Button>
-    }
-  />
-);
+export function PageError(props: PageErrorProps) {
+  return (
+    <ErrorMessage
+      error={props.error}
+      action={
+        <Button onClick={() => props.refetch()}>
+          <FormattedMessage id="tryAgain" defaultMessage="Try again" />
+        </Button>
+      }
+    />
+  );
+}

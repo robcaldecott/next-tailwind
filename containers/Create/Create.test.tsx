@@ -134,7 +134,7 @@ describe("Create", () => {
     );
     await userEvent.type(
       screen.getByLabelText(/registration date/i),
-      "31121999"
+      "1999-12-31"
     );
     // Reset the form
     await userEvent.click(screen.getByRole("button", { name: /reset/i }));
@@ -148,7 +148,7 @@ describe("Create", () => {
       screen.getByRole("textbox", { name: /registration number/i })
     ).toHaveValue("");
     expect(screen.getByRole("textbox", { name: /vin/i })).toHaveValue("");
-    expect(screen.getByRole("textbox", { name: /mileage/i })).toHaveValue("");
+    expect(screen.getByRole("textbox", { name: /mileage/i })).toHaveValue("0");
     expect(screen.getByLabelText(/registration date/i)).toHaveValue("");
   });
 

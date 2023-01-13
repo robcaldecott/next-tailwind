@@ -21,7 +21,7 @@ import { useFilter } from "@/providers";
 import { useVehicles } from "@/queries";
 import type { Vehicle } from "@/types";
 
-const Loading = () => {
+function Loading() {
   const intl = useIntl();
 
   return (
@@ -47,40 +47,44 @@ const Loading = () => {
       </List>
     </Paper>
   );
-};
+}
 
-const NoResults = () => (
-  <div className="flex flex-col items-center space-y-4 p-8">
-    <InformationCircleIcon className="h-16 w-16 text-indigo-700 dark:text-indigo-400" />
+function NoResults() {
+  return (
+    <div className="flex flex-col items-center space-y-4 p-8">
+      <InformationCircleIcon className="h-16 w-16 text-indigo-700 dark:text-indigo-400" />
 
-    <Text variant="h2" component="h2" align="center">
-      <FormattedMessage
-        id="noResultsTitle"
-        defaultMessage="No matching vehicles found."
-      />
-    </Text>
+      <Text variant="h2" component="h2" align="center">
+        <FormattedMessage
+          id="noResultsTitle"
+          defaultMessage="No matching vehicles found."
+        />
+      </Text>
 
-    <Text variant="body1" align="center" color="secondary">
-      <FormattedMessage
-        id="noResultsMessage"
-        defaultMessage="Please try a different filter."
-      />
-    </Text>
-  </div>
-);
+      <Text variant="body1" align="center" color="secondary">
+        <FormattedMessage
+          id="noResultsMessage"
+          defaultMessage="Please try a different filter."
+        />
+      </Text>
+    </div>
+  );
+}
 
 interface BadgeProps {
   children: ReactNode;
 }
 
-const Badge = ({ children }: BadgeProps) => (
-  <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-sky-700 px-2 font-sans text-xs font-medium text-white dark:bg-sky-500">
-    {children}
-  </span>
-);
+function Badge(props: BadgeProps) {
+  return (
+    <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-sky-700 px-2 font-sans text-xs font-medium text-white dark:bg-sky-500">
+      {props.children}
+    </span>
+  );
+}
 
-const filterItems = (data: Vehicle[], filter: string) =>
-  data.filter((vehicle) => {
+function filterItems(data: Vehicle[], filter: string) {
+  return data.filter((vehicle) => {
     if (filter === "") {
       return true;
     }
@@ -88,12 +92,13 @@ const filterItems = (data: Vehicle[], filter: string) =>
     const description = `${vehicle.manufacturer} ${vehicle.model} ${vehicle.type} ${vehicle.fuel}`;
     return description.search(re) !== -1;
   });
+}
 
 interface DataProps {
   data?: Vehicle[];
 }
 
-export const Data = ({ data = [] }: DataProps) => {
+export function Data({ data = [] }: DataProps) {
   const intl = useIntl();
   const { filter, setFilter } = useFilter();
   const [items, setItems] = useState(filterItems(data, filter));
@@ -151,7 +156,7 @@ export const Data = ({ data = [] }: DataProps) => {
       )}
     </Paper>
   );
-};
+}
 
 const Error = PageError;
 
@@ -159,17 +164,17 @@ interface VehiclesProps {
   fabPadding?: boolean;
 }
 
-export const Vehicles = ({ fabPadding }: VehiclesProps) => {
+export function Vehicles(props: VehiclesProps) {
   const { isLoading, isSuccess, data, isError, error, refetch } = useVehicles();
 
   return (
-    <div className={clsx("mx-auto max-w-5xl", fabPadding && "mb-24")}>
+    <div className={clsx("mx-auto max-w-5xl", props.fabPadding && "mb-24")}>
       {isLoading && <Loading />}
       {isSuccess && <Data data={data} />}
       {isError && <Error error={error} refetch={refetch} />}
     </div>
   );
-};
+}
 
 Vehicles.Loading = Loading;
 Vehicles.Data = Data;

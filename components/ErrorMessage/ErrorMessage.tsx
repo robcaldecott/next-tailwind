@@ -9,26 +9,28 @@ interface ErrorMessageProps {
   action?: ReactNode | undefined;
 }
 
-export const ErrorMessage = ({ error, action }: ErrorMessageProps) => (
-  <Paper className="mx-auto flex max-w-2xl flex-col items-center space-y-2 p-8">
-    <ExclamationCircleIcon
-      aria-hidden="true"
-      className="h-16 w-16 text-red-500"
-    />
-
-    <Text variant="h2" component="h2" align="center">
-      <FormattedMessage
-        id="errorTitle"
-        defaultMessage="Something went wrong!"
+export function ErrorMessage(props: ErrorMessageProps) {
+  return (
+    <Paper className="mx-auto flex max-w-2xl flex-col items-center space-y-2 p-8">
+      <ExclamationCircleIcon
+        aria-hidden="true"
+        className="h-16 w-16 text-red-500"
       />
-    </Text>
 
-    {error && (
-      <Text variant="body1" align="center" color="secondary">
-        {`${error.status}: ${error.statusText}`}
+      <Text variant="h2" component="h2" align="center">
+        <FormattedMessage
+          id="errorTitle"
+          defaultMessage="Something went wrong!"
+        />
       </Text>
-    )}
 
-    {action}
-  </Paper>
-);
+      {props.error && (
+        <Text variant="body1" align="center" color="secondary">
+          {`${props.error.status}: ${props.error.statusText}`}
+        </Text>
+      )}
+
+      {props.action}
+    </Paper>
+  );
+}

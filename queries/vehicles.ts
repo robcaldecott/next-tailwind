@@ -2,20 +2,25 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Vehicle, VehiclePayload } from "@/types";
 import { http } from "@/utils";
 
-export const useVehicles = () =>
-  useQuery<Vehicle[], Response>(["vehicles"], () => http.get("/api/vehicles"));
+export function useVehicles() {
+  return useQuery<Vehicle[], Response>(["vehicles"], () =>
+    http.get("/api/vehicles")
+  );
+}
 
-export const useVehicle = (id: string) =>
-  useQuery<Vehicle, Response>(["vehicle", id], () =>
+export function useVehicle(id: string) {
+  return useQuery<Vehicle, Response>(["vehicle", id], () =>
     http.get(`/api/vehicles/${id}`)
   );
+}
 
-export const useCreateVehicle = () =>
-  useMutation<Vehicle, Response, VehiclePayload>((body) =>
+export function useCreateVehicle() {
+  return useMutation<Vehicle, Response, VehiclePayload>((body) =>
     http.post("/api/vehicles", { json: body })
   );
+}
 
-export const useDeleteVehicle = () => {
+export function useDeleteVehicle() {
   const queryClient = useQueryClient();
 
   return useMutation<Vehicle, Response, string, Vehicle[]>(
@@ -45,4 +50,4 @@ export const useDeleteVehicle = () => {
       },
     }
   );
-};
+}

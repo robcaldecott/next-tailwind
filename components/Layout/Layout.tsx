@@ -11,7 +11,7 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export function Layout(props: LayoutProps) {
   const { mode, setMode } = useTheme();
 
   return (
@@ -35,7 +35,7 @@ export const Layout = ({ children }: LayoutProps) => {
         />
       </AppBar>
 
-      <main className="mx-auto max-w-7xl p-4">{children}</main>
+      <main className="mx-auto max-w-7xl p-4">{props.children}</main>
     </>
   );
-};
+}

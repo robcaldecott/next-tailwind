@@ -14,38 +14,36 @@ interface DeleteDialogProps {
   onDelete: () => void;
 }
 
-export const DeleteDialog = ({
-  open,
-  onClose,
-  onDelete,
-}: DeleteDialogProps) => (
-  <Dialog
-    open={open}
-    onClose={onClose}
-    aria-labelledby="delete-dialog-title"
-    aria-describedby="delete-dialog-description"
-  >
-    <DialogTitle id="delete-dialog-title">
-      <FormattedMessage
-        id="deleteDialogTitle"
-        defaultMessage="Delete vehicle"
-      />
-    </DialogTitle>
-    <DialogContent>
-      <DialogContentText id="delete-dialog-description">
+export function DeleteDialog(props: DeleteDialogProps) {
+  return (
+    <Dialog
+      open={props.open}
+      onClose={props.onClose}
+      aria-labelledby="delete-dialog-title"
+      aria-describedby="delete-dialog-description"
+    >
+      <DialogTitle id="delete-dialog-title">
         <FormattedMessage
-          id="deleteDialogMessage"
-          defaultMessage="Are you really sure you want to delete this vehicle?"
+          id="deleteDialogTitle"
+          defaultMessage="Delete vehicle"
         />
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button variant="secondary" onClick={onClose}>
-        <FormattedMessage id="cancel" defaultMessage="Cancel" />
-      </Button>
-      <Button variant="error" onClick={onDelete}>
-        <FormattedMessage id="delete" defaultMessage="Delete" />
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="delete-dialog-description">
+          <FormattedMessage
+            id="deleteDialogMessage"
+            defaultMessage="Are you really sure you want to delete this vehicle?"
+          />
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="secondary" onClick={props.onClose}>
+          <FormattedMessage id="cancel" defaultMessage="Cancel" />
+        </Button>
+        <Button variant="error" onClick={props.onDelete}>
+          <FormattedMessage id="delete" defaultMessage="Delete" />
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
