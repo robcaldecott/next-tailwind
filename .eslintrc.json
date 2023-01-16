@@ -34,7 +34,7 @@
                 "^react",
                 "^@?\\w",
                 // Internal packages.
-                "^(@|components|containers|mocks|pages|providers|public|styles|types)(/.*|$)",
+                "^@(/.*|$)",
                 // Side effect imports.
                 "^\\u0000",
                 // Parent imports. Put `..` last.
