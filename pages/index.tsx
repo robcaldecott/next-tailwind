@@ -1,26 +1,21 @@
 import { FormattedMessage } from "react-intl";
-import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { useQuery } from "@tanstack/react-query";
-import ky from "ky";
-import { PageError } from "@/components/PageError";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { ResponsiveFab } from "@/components/ResponsiveFab";
-import { VehiclesList, VehiclesLoading } from "@/components/VehiclesList";
+import { VehiclesList } from "@/components/VehiclesList";
+import { vehicles } from "@/mocks/vehicles";
 import type { Vehicle } from "@/types";
 
-export default function Home() {
-  const { isLoading, isSuccess, data, isError, error, refetch } = useQuery<
-    Array<Vehicle>,
-    Error
-  >({
-    queryKey: ["vehicles"],
-    queryFn: () => ky.get("/api/vehicles").json(),
-  });
+interface HomeProps {
+  vehicles: Array<Vehicle>;
+}
 
+export default function Home(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   return (
     <div className="mx-auto mb-24 max-w-5xl">
-      {isLoading && <VehiclesLoading />}
-      {isSuccess && <VehiclesList vehicles={data} />}
-      {isError && <PageError error={error} refetch={refetch} />}
+      <VehiclesList vehicles={props.vehicles} />
 
       <ResponsiveFab
         href="/create"
@@ -35,3 +30,17 @@ export default function Home() {
     </div>
   );
 }
+
+function randomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+  await new Promise((resolve) => setTimeout(resolve, randomNumber(0, 2000)));
+
+  return {
+    props: {
+      vehicles,
+    },
+  };
+};
