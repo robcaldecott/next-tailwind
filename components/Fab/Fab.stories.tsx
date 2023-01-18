@@ -1,6 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Link from "next/link";
 import { Fab } from "./Fab";
 
 export default {

@@ -1,6 +1,5 @@
 import { StarIcon } from "@heroicons/react/24/solid";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Link from "next/link";
 import { ResponsiveFab } from ".";
 
 export default {

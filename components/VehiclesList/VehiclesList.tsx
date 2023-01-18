@@ -4,7 +4,6 @@ import {
   ChevronRightIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
-import Link from "next/link";
 import { useFilter } from "@/providers/FilterProvider";
 import type { Vehicle } from "@/types";
 import { List, ListItem, ListItemLink, ListItemText } from "../List";
