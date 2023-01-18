@@ -6,13 +6,12 @@ import { Fab } from "./Fab";
 export default {
   title: "Components/Fab",
   component: Fab,
+  args: {
+    href: "/",
+  },
 } as ComponentMeta<typeof Fab>;
 
-const Template: ComponentStory<typeof Fab> = (args) => (
-  <Link href="/" passHref legacyBehavior>
-    <Fab {...args} />
-  </Link>
-);
+const Template: ComponentStory<typeof Fab> = (args) => <Fab {...args} />;
 
 export const Icon = Template.bind({});
 Icon.args = {

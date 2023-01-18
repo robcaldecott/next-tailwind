@@ -7,6 +7,7 @@ export default {
   title: "Components/ResponsiveFab",
   component: ResponsiveFab,
   args: {
+    href: "/",
     icon: StarIcon,
   },
   argTypes: {
@@ -24,9 +25,7 @@ export default {
 } as ComponentMeta<typeof ResponsiveFab>;
 
 const Template: ComponentStory<typeof ResponsiveFab> = (args) => (
-  <Link href="/" passHref legacyBehavior>
-    <ResponsiveFab {...args} />
-  </Link>
+  <ResponsiveFab {...args} />
 );
 
 export const Star = Template.bind({});
