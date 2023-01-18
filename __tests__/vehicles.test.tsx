@@ -1,20 +1,9 @@
+import { ComponentProps } from "react";
 import { IntlProvider } from "react-intl";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
 import Vehicles from "pages";
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FilterProvider } from "@/providers/FilterProvider";
 
 const replace = vi.fn();
@@ -39,51 +28,24 @@ describe("Vehicles", () => {
     },
   ];
 
-  const server = setupServer();
-
-  beforeAll(() => server.listen());
   beforeEach(() => {
     replace.mockReset();
   });
-  afterEach(() => server.restoreHandlers());
-  afterAll(() => server.close());
 
-  const Wrapper = () => {
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false,
-          refetchIntervalInBackground: false,
-          retry: 0,
-        },
-      },
-      logger: {
-        error: () => vi.fn(),
-        log: (...args) => console.log(...args),
-        warn: (...args) => console.warn(...args),
-      },
-    });
-
+  const Wrapper = (props: ComponentProps<typeof Vehicles>) => {
     return (
       <IntlProvider locale="en">
-        <QueryClientProvider client={queryClient}>
-          <FilterProvider>
-            <Vehicles />
-          </FilterProvider>
-        </QueryClientProvider>
+        <FilterProvider>
+          <Vehicles {...props} />
+        </FilterProvider>
       </IntlProvider>
     );
   };
 
-  it("loads vehicles", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
-    );
-    render(<Wrapper />);
-    // Loading state
-    expect(screen.getByLabelText(/loading vehicles/i)).toBeInTheDocument();
+  it("loads vehicles", () => {
+    render(<Wrapper vehicles={vehicles} />);
     // Wait for the list to load
-    const card = within(await screen.findByLabelText(/vehicle list/i));
+    const card = within(screen.getByLabelText(/vehicle list/i));
     const list = within(card.getByRole("list"));
     expect(
       list.getByRole("link", {
@@ -92,28 +54,8 @@ describe("Vehicles", () => {
     ).toBeInTheDocument();
   });
 
-  it("handles an error loading the vehicles", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.status(500)))
-    );
-    render(<Wrapper />);
-    expect(
-      await screen.findByRole("heading", { name: /something went wrong!/i })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/500 internal server error/i)).toBeInTheDocument();
-    // Try again should reload
-    await userEvent.click(screen.getByRole("button", { name: /try again/i }));
-    // Wait for the loading card
-    expect(
-      await screen.findByLabelText(/loading vehicles/i)
-    ).toBeInTheDocument();
-  });
-
   it("handles no search results", async () => {
-    server.use(
-      rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
-    );
-    render(<Wrapper />);
+    render(<Wrapper vehicles={vehicles} />);
     await userEvent.type(await screen.findByPlaceholderText(/search/i), "test");
     expect(
       screen.getByRole("heading", { name: /no matching vehicles found\./i })

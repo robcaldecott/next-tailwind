@@ -14,8 +14,9 @@ vi.mock("next/router", () => ({
 
 describe("Create", () => {
   const server = setupServer(
-    rest.post<Vehicle, PathParams, Vehicle>("/api/vehicles", (req, res, ctx) =>
-      res(ctx.json({ ...req.body }))
+    rest.post<Vehicle, PathParams, Vehicle>(
+      "/api/vehicles",
+      async (req, res, ctx) => res(ctx.json(await req.json()))
     )
   );
 

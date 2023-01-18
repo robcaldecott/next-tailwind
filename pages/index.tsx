@@ -31,12 +31,10 @@ export default function Home(
   );
 }
 
-function randomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  await new Promise((resolve) => setTimeout(resolve, randomNumber(0, 2000)));
+  await new Promise((resolve) =>
+    setTimeout(resolve, Math.floor(Math.random() * 200))
+  );
 
   return {
     props: {

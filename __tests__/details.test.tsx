@@ -1,9 +1,11 @@
+import { ComponentProps } from "react";
 import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+import Details from "pages/vehicles/[id]";
 import {
   afterAll,
   afterEach,
@@ -14,7 +16,6 @@ import {
   it,
   vi,
 } from "vitest";
-import Details from "pages/vehicles/[id]";
 
 const replace = vi.fn();
 
@@ -45,7 +46,7 @@ describe("Details", () => {
   afterEach(() => server.restoreHandlers());
   afterAll(() => server.close());
 
-  const Wrapper = () => {
+  const Wrapper = (props: ComponentProps<typeof Details>) => {
     const queryClient = new QueryClient({
       defaultOptions: {
         queries: {
@@ -64,23 +65,16 @@ describe("Details", () => {
     return (
       <IntlProvider locale="en">
         <QueryClientProvider client={queryClient}>
-          <Details />
+          <Details {...props} />
         </QueryClientProvider>
       </IntlProvider>
     );
   };
 
-  it("loads vehicle details", async () => {
-    server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.json(vehicle))
-      )
-    );
-    render(<Wrapper />);
-    // Loading state
-    expect(screen.getByLabelText(/loading vehicle/i)).toBeInTheDocument();
+  it("loads vehicle details", () => {
+    render(<Wrapper vehicle={vehicle} />);
     // Wait for the details to load
-    const card = within(await screen.findByLabelText(/vehicle details/i));
+    const card = within(screen.getByLabelText(/vehicle details/i));
     // Check the headings
     expect(
       card.getByText(/volkswagen explorer cargo van/i)
@@ -96,38 +90,16 @@ describe("Details", () => {
     );
   });
 
-  it("handles an error loading the vehicle", async () => {
-    server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.status(500))
-      )
-    );
-    render(<Wrapper />);
-    expect(
-      await screen.findByRole("heading", { name: /something went wrong!/i })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/internal server error/i)).toBeInTheDocument();
-    // Try again should reload
-    await userEvent.click(screen.getByRole("button", { name: /try again/i }));
-    // Wait for the loading card
-    expect(
-      await screen.findByLabelText(/loading vehicle/i)
-    ).toBeInTheDocument();
-  });
-
   it("deletes the vehicle", async () => {
     server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.json(vehicle))
-      ),
       rest.delete("/api/vehicles/:vehicleId", (req, res, ctx) =>
         res(ctx.json({ id: req.params.id }))
       )
     );
-    render(<Wrapper />);
+    render(<Wrapper vehicle={vehicle} />);
     // Click the Delete button
     await userEvent.click(
-      await screen.findByRole("button", { name: /delete vehicle/i })
+      screen.getByRole("button", { name: /delete vehicle/i })
     );
     // Check the dialog is correct
     const dialog = within(
@@ -144,17 +116,14 @@ describe("Details", () => {
 
   it("handles errors deleting the vehicle", async () => {
     server.use(
-      rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
-        res(ctx.json(vehicle))
-      ),
       rest.delete("/api/vehicles/:vehicleId", (req, res, ctx) =>
         res(ctx.status(500))
       )
     );
-    render(<Wrapper />);
+    render(<Wrapper vehicle={vehicle} />);
     // Click the Delete button
     await userEvent.click(
-      await screen.findByRole("button", { name: /delete vehicle/i })
+      screen.getByRole("button", { name: /delete vehicle/i })
     );
     // Check the dialog is correct
     const dialog = within(

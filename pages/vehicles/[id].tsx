@@ -1,83 +1,64 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import ky from "ky";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Details, DetailsLoading } from "@/components/Details";
-import { PageError } from "@/components/PageError";
+import { Details } from "@/components/Details";
+import { vehicles } from "@/mocks/vehicles";
 import type { Vehicle } from "@/types";
 
-export default function DetailsPage() {
+interface DetailsPageProps {
+  vehicle: Vehicle;
+}
+
+export default function DetailsPage(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) {
   const router = useRouter();
   const { id } = router.query;
 
-  const detailsQuery = useQuery<Vehicle, Error>({
-    queryKey: ["vehicle", id],
-    queryFn: () => ky.get(`/api/vehicles/${id}`).json(),
-  });
-
-  const queryClient = useQueryClient();
-  const deleteQuery = useMutation<Vehicle, Error, string, Array<Vehicle>>(
-    (id) => ky.delete(`/api/vehicles/${id}`).json(),
-    {
-      onMutate: async (id) => {
-        await queryClient.cancelQueries(["vehicles"]);
-        // Remove the vehicles immediately
-        const previous = queryClient.getQueryData<Vehicle[]>(["vehicles"]);
-        if (previous) {
-          queryClient.setQueryData(
-            ["vehicles"],
-            previous.filter((vehicle) => vehicle.id !== id)
-          );
-        }
-        return previous;
-      },
-      onError: (error, id, context) => {
-        // Revert the original list of vehicles on error
-        if (context) {
-          queryClient.setQueryData(["vehicles"], context);
-        }
-      },
-      onSettled: () => {
-        // Fetch the list of new vehicles
-        queryClient.invalidateQueries(["vehicles"]);
-      },
-    }
+  const deleteQuery = useMutation<Vehicle, Error, string>((id) =>
+    ky.delete(`/api/vehicles/${id}`).json()
   );
 
   return (
     <div className="mx-auto max-w-3xl">
-      {detailsQuery.isLoading && (
-        <>
-          <Breadcrumbs />
-          <DetailsLoading />
-        </>
-      )}
+      <Breadcrumbs registrationNumber={props.vehicle.registrationNumber} />
 
-      {detailsQuery.isError && (
-        <PageError error={detailsQuery.error} refetch={detailsQuery.refetch} />
-      )}
-
-      {detailsQuery.isSuccess && (
-        <>
-          <Breadcrumbs
-            registrationNumber={detailsQuery.data.registrationNumber}
-          />
-
-          <Details
-            vehicle={detailsQuery.data}
-            onDelete={(cb) => {
-              deleteQuery.mutate(id as string, {
-                onSuccess: () => {
-                  router.replace("/");
-                },
-                onSettled: cb,
-              });
-            }}
-            error={deleteQuery.error}
-            onResetError={deleteQuery.reset}
-          />
-        </>
-      )}
+      <Details
+        vehicle={props.vehicle}
+        onDelete={(cb) => {
+          deleteQuery.mutate(id as string, {
+            onSuccess: () => {
+              router.replace("/");
+            },
+            onSettled: cb,
+          });
+        }}
+        error={deleteQuery.error}
+        onResetError={deleteQuery.reset}
+      />
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<DetailsPageProps> = async (
+  context
+) => {
+  await new Promise((resolve) =>
+    setTimeout(resolve, Math.floor(Math.random() * 200))
+  );
+
+  const id = context.query.id as string;
+  const vehicle = vehicles.find((vehicle) => vehicle.id === id);
+
+  if (vehicle === undefined) {
+    throw new Error(`Vehicle ${id} not found`);
+  }
+
+  return {
+    props: {
+      vehicle,
+    },
+  };
+};
