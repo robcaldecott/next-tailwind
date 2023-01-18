@@ -1,5 +1,7 @@
 import { Meta } from "@storybook/react";
-import { Button, Paper, Text } from "@/components";
+import { Button } from "@/components/Button";
+import { Paper } from "@/components/Paper";
+import { Text } from "@/components/Text";
 import { ThemeProvider, useTheme } from ".";
 
 export default {

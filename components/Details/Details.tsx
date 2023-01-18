@@ -1,49 +1,35 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import ky from "ky";
-import { useRouter } from "next/router";
-import {
-  Alert,
-  Breadcrumbs,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  PageError,
-  Skeleton,
-} from "@/components";
 import type { Vehicle } from "@/types";
-import { DeleteDialog } from "./DeleteDialog";
+import { Alert } from "../Alert";
+import { Button } from "../Button";
+import { Card, CardActions, CardContent, CardHeader } from "../Card";
+import { DeleteDialog } from "../DeleteDialog";
+import { Skeleton } from "../Skeleton";
 
-function Loading() {
+export function DetailsLoading() {
   const intl = useIntl();
 
   return (
-    <>
-      <Breadcrumbs />
-
-      <Card
-        aria-label={intl.formatMessage({
-          id: "loadingVehicle",
-          defaultMessage: "Loading vehicle",
-        })}
-      >
-        <CardHeader
-          title={<Skeleton />}
-          subheader={<Skeleton />}
-          divider
-          className="bg-sky-50"
-        />
-        <CardContent>
-          {[...Array(16).keys()].map((key) => (
-            <Skeleton key={key} height={20} />
-          ))}
-        </CardContent>
-      </Card>
-    </>
+    <Card
+      aria-label={intl.formatMessage({
+        id: "loadingVehicle",
+        defaultMessage: "Loading vehicle",
+      })}
+    >
+      <CardHeader
+        title={<Skeleton />}
+        subheader={<Skeleton />}
+        divider
+        className="bg-sky-50"
+      />
+      <CardContent>
+        {[...Array(16).keys()].map((key) => (
+          <Skeleton key={key} height={20} />
+        ))}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -88,49 +74,19 @@ function Field(props: FieldProps) {
   );
 }
 
-interface DataProps {
-  data: Vehicle;
+interface DetailsProps {
+  vehicle: Vehicle;
+  onDelete: (cb: () => void) => void;
+  error: Error | null;
+  onResetError: () => void;
 }
 
-function Data(props: DataProps) {
-  const queryClient = useQueryClient();
+export function Details(props: DetailsProps) {
   const intl = useIntl();
   const [showDialog, setShowDialog] = useState(false);
-  const { mutate, isError, error, reset } = useMutation<
-    Vehicle,
-    Error,
-    string,
-    Vehicle[]
-  >((id) => ky.delete(`/api/vehicles/${id}`).json(), {
-    onMutate: async (id) => {
-      await queryClient.cancelQueries(["vehicles"]);
-      // Remove the vehicles immediately
-      const previous = queryClient.getQueryData<Vehicle[]>(["vehicles"]);
-      if (previous) {
-        queryClient.setQueryData(
-          ["vehicles"],
-          previous.filter((vehicle) => vehicle.id !== id)
-        );
-      }
-      return previous;
-    },
-    onError: (error, id, context) => {
-      // Revert the original list of vehicles on error
-      if (context) {
-        queryClient.setQueryData(["vehicles"], context);
-      }
-    },
-    onSettled: () => {
-      // Fetch the list of new vehicles
-      queryClient.invalidateQueries(["vehicles"]);
-    },
-  });
-  const router = useRouter();
 
   return (
     <>
-      <Breadcrumbs registrationNumber={props.data.registrationNumber} />
-
       <Card
         aria-label={intl.formatMessage({
           id: "vehicleDetails",
@@ -138,8 +94,8 @@ function Data(props: DataProps) {
         })}
       >
         <CardHeader
-          title={`${props.data.manufacturer} ${props.data.model} ${props.data.type}`}
-          subheader={props.data.registrationNumber}
+          title={`${props.vehicle.manufacturer} ${props.vehicle.model} ${props.vehicle.type}`}
+          subheader={props.vehicle.registrationNumber}
           divider
         />
         <CardContent divider>
@@ -148,28 +104,28 @@ function Data(props: DataProps) {
             <Field
               id="color"
               label={<FormattedMessage id="color" defaultMessage="Colour" />}
-              value={<Swatch color={props.data.color} />}
+              value={<Swatch color={props.vehicle.color} />}
             />
 
             {/* Fuel */}
             <Field
               id="fuel"
               label={<FormattedMessage id="fuel" defaultMessage="Fuel" />}
-              value={props.data.fuel}
+              value={props.vehicle.fuel}
             />
 
             {/* VIN */}
             <Field
               id="vin"
               label={<FormattedMessage id="vin" defaultMessage="VIN" />}
-              value={props.data.vin}
+              value={props.vehicle.vin}
             />
 
             {/* Mileage */}
             <Field
               id="mileage"
               label={<FormattedMessage id="mileage" defaultMessage="Mileage" />}
-              value={<FormattedNumber value={props.data.mileage} />}
+              value={<FormattedNumber value={props.vehicle.mileage} />}
             />
 
             {/* Registration date */}
@@ -185,19 +141,19 @@ function Data(props: DataProps) {
                 <FormattedMessage
                   id="fullRegistrationDate"
                   defaultMessage="{date, date, full}"
-                  values={{ date: new Date(props.data.registrationDate) }}
+                  values={{ date: new Date(props.vehicle.registrationDate) }}
                 />
               }
             />
           </dl>
         </CardContent>
         <CardActions>
-          {isError ? (
+          {props.error ? (
             <Alert
               grow
-              label={error.message}
+              label={props.error.message}
               action={
-                <Button variant="secondary" onClick={reset}>
+                <Button variant="secondary" onClick={props.onResetError}>
                   <FormattedMessage id="close" defaultMessage="Close" />
                 </Button>
               }
@@ -222,44 +178,9 @@ function Data(props: DataProps) {
         open={showDialog}
         onClose={() => setShowDialog(false)}
         onDelete={() => {
-          mutate(props.data.id, {
-            onSuccess: () => {
-              router.replace("/");
-            },
-            onSettled: () => {
-              setShowDialog(false);
-            },
-          });
+          props.onDelete(() => setShowDialog(false));
         }}
       />
     </>
   );
 }
-
-const Error = PageError;
-
-interface DetailsProps {
-  id: string;
-}
-
-export const Details = ({ id }: DetailsProps) => {
-  const { isLoading, isSuccess, data, isError, error, refetch } = useQuery<
-    Vehicle,
-    Error
-  >({
-    queryKey: ["vehicle", id],
-    queryFn: () => ky.get(`/api/vehicles/${id}`).json(),
-  });
-
-  return (
-    <div className="mx-auto max-w-3xl">
-      {isLoading && <Loading />}
-      {isSuccess && <Data data={data} />}
-      {isError && <Error error={error} refetch={refetch} />}
-    </div>
-  );
-};
-
-Details.Loading = Loading;
-Details.Data = Data;
-Details.Error = Error;

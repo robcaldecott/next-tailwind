@@ -14,12 +14,12 @@ import {
   it,
   vi,
 } from "vitest";
-import { Details } from "./Details";
+import Details from "pages/vehicles/[id]";
 
 const replace = vi.fn();
 
 vi.mock("next/router", () => ({
-  useRouter: () => ({ replace }),
+  useRouter: () => ({ replace, query: { id: "123" } }),
 }));
 
 describe("Details", () => {
@@ -64,7 +64,7 @@ describe("Details", () => {
     return (
       <IntlProvider locale="en">
         <QueryClientProvider client={queryClient}>
-          <Details id="123" />
+          <Details />
         </QueryClientProvider>
       </IntlProvider>
     );

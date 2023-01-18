@@ -4,6 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+import Vehicles from "pages";
 import {
   afterAll,
   afterEach,
@@ -14,8 +15,7 @@ import {
   it,
   vi,
 } from "vitest";
-import { FilterProvider } from "@/providers";
-import { Vehicles } from "./Vehicles";
+import { FilterProvider } from "@/providers/FilterProvider";
 
 const replace = vi.fn();
 

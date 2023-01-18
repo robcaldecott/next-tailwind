@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button } from "@/components";
+import { Button } from "../Button";
 import { Alert } from ".";
 
 export default {

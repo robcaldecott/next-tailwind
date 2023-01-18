@@ -4,9 +4,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PathParams, rest } from "msw";
 import { setupServer } from "msw/node";
+import Create from "pages/create";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { Vehicle } from "@/types";
-import { Create } from "./Create";
 
 vi.mock("next/router", () => ({
   useRouter: () => ({ replace: vi.fn, push: vi.fn }),

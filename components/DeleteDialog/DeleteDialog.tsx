@@ -1,12 +1,12 @@
 import { FormattedMessage } from "react-intl";
+import { Button } from "../Button";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@/components";
+} from "../Dialog";
 
 interface DeleteDialogProps {
   open: boolean;

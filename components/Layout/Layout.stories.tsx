@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Layout } from ".";
 
 export default {

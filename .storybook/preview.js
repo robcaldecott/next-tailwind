@@ -27,6 +27,7 @@ export const decorators = [
           refetchOnWindowFocus: false,
           refetchIntervalInBackground: false,
           retry: false,
+          cacheTime: 0,
         },
       },
       logger: {

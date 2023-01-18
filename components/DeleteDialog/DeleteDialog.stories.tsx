@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { DeleteDialog } from "./DeleteDialog";
 
 export default {
-  title: "Containers/Details/DeleteDialog",
+  title: "Components/DeleteDialog",
   component: DeleteDialog,
 } as ComponentMeta<typeof DeleteDialog>;
 

@@ -1,7 +1,7 @@
 import { IntlProvider } from "react-intl";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Layout } from ".";
 
 describe("Layout", () => {

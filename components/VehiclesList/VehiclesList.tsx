@@ -4,25 +4,16 @@ import {
   ChevronRightIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
-import { useQuery } from "@tanstack/react-query";
-import clsx from "clsx";
-import ky from "ky";
 import Link from "next/link";
-import {
-  List,
-  ListItem,
-  ListItemLink,
-  ListItemText,
-  PageError,
-  Paper,
-  SearchField,
-  Skeleton,
-  Text,
-} from "@/components";
-import { useFilter } from "@/providers";
+import { useFilter } from "@/providers/FilterProvider";
 import type { Vehicle } from "@/types";
+import { List, ListItem, ListItemLink, ListItemText } from "../List";
+import { Paper } from "../Paper";
+import { SearchField } from "../SearchField";
+import { Skeleton } from "../Skeleton";
+import { Text } from "../Text";
 
-function Loading() {
+export function VehiclesLoading() {
   const intl = useIntl();
 
   return (
@@ -95,15 +86,18 @@ function filterItems(data: Vehicle[], filter: string) {
   });
 }
 
-interface DataProps {
-  data?: Vehicle[];
+interface VehiclesListProps {
+  vehicles?: Vehicle[];
 }
 
-export function Data({ data = [] }: DataProps) {
+export function VehiclesList({ vehicles = [] }: VehiclesListProps) {
   const intl = useIntl();
   const { filter, setFilter } = useFilter();
-  const [items, setItems] = useState(filterItems(data, filter));
-  useEffect(() => void setItems(filterItems(data, filter)), [filter, data]);
+  const [items, setItems] = useState(filterItems(vehicles, filter));
+  useEffect(
+    () => void setItems(filterItems(vehicles, filter)),
+    [filter, vehicles]
+  );
 
   return (
     <Paper
@@ -158,31 +152,3 @@ export function Data({ data = [] }: DataProps) {
     </Paper>
   );
 }
-
-const Error = PageError;
-
-interface VehiclesProps {
-  fabPadding?: boolean;
-}
-
-export function Vehicles(props: VehiclesProps) {
-  const { isLoading, isSuccess, data, isError, error, refetch } = useQuery<
-    Array<Vehicle>,
-    Error
-  >({
-    queryKey: ["vehicles"],
-    queryFn: () => ky.get("/api/vehicles").json(),
-  });
-
-  return (
-    <div className={clsx("mx-auto max-w-5xl", props.fabPadding && "mb-24")}>
-      {isLoading && <Loading />}
-      {isSuccess && <Data data={data} />}
-      {isError && <Error error={error} refetch={refetch} />}
-    </div>
-  );
-}
-
-Vehicles.Loading = Loading;
-Vehicles.Data = Data;
-Vehicles.Error = Error;

@@ -3,7 +3,6 @@ const path = require("path");
 module.exports = {
   stories: [
     "../components/**/*.stories.@(js|jsx|ts|tsx)",
-    "../containers/**/*.stories.@(js|jsx|ts|tsx)",
     "../providers/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
@@ -32,6 +31,7 @@ module.exports = {
   reactOptions: {
     fastRefresh: true,
   },
+  staticDirs: ["../public"],
   webpackFinal: (config) => {
     config.resolve.alias["@"] = path.resolve(__dirname, "../");
     return config;
