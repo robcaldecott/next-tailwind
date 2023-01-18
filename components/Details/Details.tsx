@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";

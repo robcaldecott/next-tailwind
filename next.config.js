@@ -6,6 +6,9 @@ const nextConfig = {
   eslint: {
     dirs: ["components", "mocks", "pages", "providers", "types"],
   },
+  experimental: {
+    appDir: true,
+  },
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
