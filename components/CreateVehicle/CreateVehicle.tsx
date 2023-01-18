@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { colors, fuelTypes, manufacturers } from "@/mocks";
+import { colors, fuelTypes, manufacturers } from "@/mocks/vehicles";
 import type { Vehicle, VehiclePayload } from "@/types";
 import { Button } from "../Button";
 import { Paper } from "../Paper";

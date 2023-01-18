@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
-import { vehicles } from "@/mocks";
+import { vehicles } from "@/mocks/vehicles";
 import type { Vehicle } from "@/types";
 
 interface Data {

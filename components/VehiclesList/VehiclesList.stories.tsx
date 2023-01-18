@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { vehicles } from "@/mocks";
+import { vehicles } from "@/mocks/vehicles";
 import { FilterProvider } from "@/providers/FilterProvider";
 import { VehiclesList, VehiclesLoading } from ".";
 
