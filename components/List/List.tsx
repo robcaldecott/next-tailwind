@@ -1,5 +1,6 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
+import { ComponentProps, ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
+import Link from "next/link";
 import { Text } from "../Text";
 
 interface ListProps extends ComponentPropsWithoutRef<"ul"> {
@@ -34,24 +35,20 @@ export function ListItem({ className, ...props }: ListItemProps) {
   );
 }
 
-type ListItemLinkProps = ComponentPropsWithoutRef<"a">;
-
-export const ListItemLink = forwardRef<HTMLAnchorElement, ListItemLinkProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <a
-        ref={ref}
-        className={clsx(
-          "flex w-full items-center justify-start space-x-2 py-2 px-4 text-left outline-none hover:bg-slate-100/75 focus:bg-slate-200 dark:hover:bg-slate-700/75 dark:focus:bg-slate-700",
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-
-ListItemLink.displayName = "ListItemLink";
+export function ListItemLink({
+  className,
+  ...props
+}: ComponentProps<typeof Link>) {
+  return (
+    <Link
+      className={clsx(
+        "flex w-full items-center justify-start space-x-2 py-2 px-4 text-left outline-none hover:bg-slate-100/75 focus:bg-slate-200 dark:hover:bg-slate-700/75 dark:focus:bg-slate-700",
+        className
+      )}
+      {...props}
+    />
+  );
+}
 
 interface ListItemTextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "children"> {

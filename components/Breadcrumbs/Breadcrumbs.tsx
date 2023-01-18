@@ -10,10 +10,11 @@ export function Breadcrumbs(props: BreadcrumbsProps) {
     <nav className="mb-4 font-sans text-base font-normal">
       <ol className="flex space-x-2">
         <li>
-          <Link href="/" legacyBehavior>
-            <a className="text-sky-600 underline hover:text-sky-900 dark:text-sky-300 dark:hover:text-sky-500">
-              <FormattedMessage id="home" defaultMessage="Home" />
-            </a>
+          <Link
+            href="/"
+            className="text-sky-600 underline hover:text-sky-900 dark:text-sky-300 dark:hover:text-sky-500"
+          >
+            <FormattedMessage id="home" defaultMessage="Home" />
           </Link>
         </li>
         {props.registrationNumber && (

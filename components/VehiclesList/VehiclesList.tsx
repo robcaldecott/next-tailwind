@@ -132,20 +132,13 @@ export function VehiclesList({ vehicles = [] }: VehiclesListProps) {
       ) : (
         <List dividers>
           {items.map((vehicle) => (
-            <Link
-              key={vehicle.id}
-              href={`/vehicles/${vehicle.id}`}
-              passHref
-              legacyBehavior
-            >
-              <ListItemLink>
-                <ListItemText
-                  primary={`${vehicle.manufacturer} ${vehicle.model} ${vehicle.type} ${vehicle.fuel}`}
-                  secondary={vehicle.registrationNumber}
-                />
-                <ChevronRightIcon className="h-6 w-6 shrink-0 text-slate-500" />
-              </ListItemLink>
-            </Link>
+            <ListItemLink key={vehicle.id} href={`/vehicles/${vehicle.id}`}>
+              <ListItemText
+                primary={`${vehicle.manufacturer} ${vehicle.model} ${vehicle.type} ${vehicle.fuel}`}
+                secondary={vehicle.registrationNumber}
+              />
+              <ChevronRightIcon className="h-6 w-6 shrink-0 text-slate-500" />
+            </ListItemLink>
           ))}
         </List>
       )}

@@ -5,7 +5,7 @@ import { Paper } from "../Paper";
 import { Text } from "../Text";
 
 interface ErrorMessageProps {
-  error: Error | null;
+  error?: Error | null;
   action?: ReactNode | undefined;
 }
 
