@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon";

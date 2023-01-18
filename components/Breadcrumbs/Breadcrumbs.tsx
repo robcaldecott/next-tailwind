@@ -1,3 +1,5 @@
+"use client";
+
 import { FormattedMessage } from "react-intl";
 import Link from "next/link";
 
