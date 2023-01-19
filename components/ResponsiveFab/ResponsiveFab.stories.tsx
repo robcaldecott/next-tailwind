@@ -1,4 +1,4 @@
-import { StarIcon } from "@heroicons/react/24/solid";
+import StarIcon from "@heroicons/react/24/solid/StarIcon";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ResponsiveFab } from ".";
 

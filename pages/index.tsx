@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { useQuery } from "@tanstack/react-query";
 import ky from "ky";
 import { PageError } from "@/components/PageError";

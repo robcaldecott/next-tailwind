@@ -1,6 +1,6 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { forwardRef } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import ChevronDownIcon from "@heroicons/react/24/solid/ChevronDownIcon";
 import clsx from "clsx";
 import { TextFieldError, TextFieldLabel } from "../TextField";
 

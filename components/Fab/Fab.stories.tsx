@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
+import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Fab } from "./Fab";
 

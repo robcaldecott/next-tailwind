@@ -1,4 +1,4 @@
-import { HeartIcon } from "@heroicons/react/24/solid";
+import HeartIcon from "@heroicons/react/24/solid/HeartIcon";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { IconButton } from ".";
 

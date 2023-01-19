@@ -1,9 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  ChevronRightIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/solid";
+import ChevronRightIcon from "@heroicons/react/24/solid/ChevronRightIcon";
+import InformationCircleIcon from "@heroicons/react/24/solid/InformationCircleIcon";
 import { useFilter } from "@/providers/FilterProvider";
 import type { Vehicle } from "@/types";
 import { List, ListItem, ListItemLink, ListItemText } from "../List";

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
-import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
+import MoonIcon from "@heroicons/react/24/solid/MoonIcon";
+import SunIcon from "@heroicons/react/24/solid/SunIcon";
 import Head from "next/head";
 import { useTheme } from "@/providers/ThemeProvider";
 import { AppBar } from "../AppBar";

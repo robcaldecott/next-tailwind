@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
 import clsx from "clsx";
 import { TextFieldInput } from "../TextField";
 
