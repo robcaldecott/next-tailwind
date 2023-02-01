@@ -14,7 +14,7 @@ import {
   it,
   vi,
 } from "vitest";
-import Details from "pages/vehicles/[id]";
+import Details from "../pages/vehicles/[id]";
 
 const replace = vi.fn();
 
