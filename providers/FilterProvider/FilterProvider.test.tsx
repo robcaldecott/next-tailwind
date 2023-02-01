@@ -1,28 +1,26 @@
 import { ReactNode } from "react";
 import { act, render, renderHook, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 import { FilterProvider, useFilter } from ".";
 
-describe("FilterProvider", () => {
-  it("renders", () => {
-    render(<FilterProvider>Hello, world!</FilterProvider>);
-    expect(screen.getByText(/hello, world!/i)).toBeInTheDocument();
-  });
+it("renders", () => {
+  render(<FilterProvider>Hello, world!</FilterProvider>);
+  expect(screen.getByText(/hello, world!/i)).toBeInTheDocument();
+});
 
-  const wrapper = ({ children }: { children: ReactNode }) => (
-    <FilterProvider>{children}</FilterProvider>
-  );
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <FilterProvider>{children}</FilterProvider>
+);
 
-  it("uses the correct initial values", () => {
-    const { result } = renderHook(() => useFilter(), { wrapper });
-    expect(result.current.filter).toBe("");
-  });
+it("uses the correct initial values", () => {
+  const { result } = renderHook(() => useFilter(), { wrapper });
+  expect(result.current.filter).toBe("");
+});
 
-  it("updates the filter", () => {
-    const { result } = renderHook(() => useFilter(), { wrapper });
-    act(() => {
-      result.current.setFilter("test");
-    });
-    expect(result.current.filter).toBe("test");
+it("updates the filter", () => {
+  const { result } = renderHook(() => useFilter(), { wrapper });
+  act(() => {
+    result.current.setFilter("test");
   });
+  expect(result.current.filter).toBe("test");
 });
