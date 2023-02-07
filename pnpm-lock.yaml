@@ -14,7 +14,6 @@ specifiers:
   '@storybook/builder-webpack5': ^6.5.16
   '@storybook/manager-webpack5': ^6.5.16
   '@storybook/react': ^6.5.16
-  '@storybook/testing-library': ^0.0.13
   '@tanstack/react-query': ^4.24.4
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^13.4.0
@@ -83,7 +82,6 @@ devDependencies:
   '@storybook/builder-webpack5': 6.5.16_7euak6xcflffxphocbmjdcnvcu
   '@storybook/manager-webpack5': 6.5.16_7euak6xcflffxphocbmjdcnvcu
   '@storybook/react': 6.5.16_cvdxofhutmhp53fr2quh5i36x4
-  '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 14.4.3
@@ -3572,19 +3570,6 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/instrumenter/6.5.15_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-93WyH0s63RCv496eHjQ5dWFXoExXg9dlNMe7i4/FVVbWeDdb1pPVIHsLn28WxOiVQahQEAW2EA7Mao3BiBWg+A==}
-    dependencies:
-      '@storybook/addons': 6.5.15_biqbaboplfbrettd7655fr4n2y
-      '@storybook/client-logger': 6.5.15
-      '@storybook/core-events': 6.5.15
-      core-js: 3.27.1
-      global: 4.4.0
-    transitivePeerDependencies:
-      - react
-      - react-dom
-    dev: true
-
   /@storybook/instrumenter/6.5.16_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-q8/GaBk8PA/cL7m5OW+ec5t63+Zja9YvYSPGXrYtW17koSv7OnNPmk6RvI7tIHHO0mODBYnaHjF4zQfEGoyR5Q==}
     dependencies:
@@ -4005,19 +3990,6 @@ packages:
       - webpack-command
     dev: true
 
-  /@storybook/testing-library/0.0.13_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-vRMeIGer4EjJkTgI8sQyK9W431ekPWYCWL//OmSDJ64IT3h7FnW7Xg6p+eqM3oII98/O5pcya5049GxnjaPtxw==}
-    dependencies:
-      '@storybook/client-logger': 6.5.15
-      '@storybook/instrumenter': 6.5.15_biqbaboplfbrettd7655fr4n2y
-      '@testing-library/dom': 8.19.1
-      '@testing-library/user-event': 13.5.0_ua4wuun3fnehcjqtqj2e2ldgpe
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - react
-      - react-dom
-    dev: true
-
   /@storybook/theming/6.5.15_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-pgdW0lVZKKXQ4VhIfLHycMmwFSVOY7vLTKnytag4Y8Yz+aXm0bwDN/QxPntFzDH47F1Rcy2ywNnvty8ooDTvuA==}
     peerDependencies:
@@ -4138,16 +4110,6 @@ packages:
       '@types/react-dom': 18.0.10
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: true
-
-  /@testing-library/user-event/13.5.0_ua4wuun3fnehcjqtqj2e2ldgpe:
-    resolution: {integrity: sha512-5Kwtbo3Y/NowpkbRuSepbyMFkZmHgD+vPzYB/RJ4oxt5Gj/avFFBYjhw27cqSVPVw/3a67NK1PbiIr9k4Gwmdg==}
-    engines: {node: '>=10', npm: '>=6'}
-    peerDependencies:
-      '@testing-library/dom': '>=7.21.4'
-    dependencies:
-      '@babel/runtime': 7.20.7
-      '@testing-library/dom': 8.19.1
     dev: true
 
   /@testing-library/user-event/14.4.3:
