@@ -14,7 +14,7 @@ interface Data {
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data[] | Vehicle>
+  res: NextApiResponse<Array<Data> | Vehicle>
 ) {
   const { method } = req;
 
