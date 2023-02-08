@@ -2,7 +2,7 @@ import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { DefaultBodyType, PathParams, rest } from "msw";
+import { rest } from "msw";
 import { setupServer } from "msw/node";
 import {
   afterAll,
@@ -13,7 +13,6 @@ import {
   it,
   vi,
 } from "vitest";
-import { Vehicle } from "@/types";
 import Details from "../pages/vehicles/[id]";
 
 const replace = vi.fn();
@@ -22,7 +21,7 @@ vi.mock("next/router", () => ({
   useRouter: () => ({ replace, query: { id: "123" } }),
 }));
 
-const vehicle: Vehicle = {
+const vehicle = {
   id: "5e0562c5-a50b-42ff-83e5-4c004c5b639a",
   manufacturer: "Volkswagen",
   model: "Explorer",
@@ -71,9 +70,8 @@ const Wrapper = () => {
 
 it("loads vehicle details", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Vehicle>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.json(vehicle))
+    rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.json(vehicle))
     )
   );
   render(<Wrapper />);
@@ -96,9 +94,8 @@ it("loads vehicle details", async () => {
 
 it("handles an error loading the vehicle", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Vehicle>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.status(500))
+    rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.status(500))
     )
   );
   render(<Wrapper />);
@@ -114,13 +111,11 @@ it("handles an error loading the vehicle", async () => {
 
 it("deletes the vehicle", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Vehicle>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.json(vehicle))
+    rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.json(vehicle))
     ),
-    rest.delete<DefaultBodyType, { id: string }, { id: string }>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.json({ id: req.params.id }))
+    rest.delete("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.json({ id: req.params.id }))
     )
   );
   render(<Wrapper />);
@@ -143,13 +138,11 @@ it("deletes the vehicle", async () => {
 
 it("handles errors deleting the vehicle", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Vehicle>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.json(vehicle))
+    rest.get("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.json(vehicle))
     ),
-    rest.delete<DefaultBodyType, { id: string }, { id: string }>(
-      "/api/vehicles/:vehicleId",
-      (req, res, ctx) => res(ctx.status(500))
+    rest.delete("/api/vehicles/:vehicleId", (req, res, ctx) =>
+      res(ctx.status(500))
     )
   );
   render(<Wrapper />);

@@ -2,7 +2,7 @@ import { IntlProvider } from "react-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { DefaultBodyType, PathParams, rest } from "msw";
+import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Vehicles from "pages";
 import {
@@ -15,7 +15,6 @@ import {
   vi,
 } from "vitest";
 import { FilterProvider } from "@/providers/FilterProvider";
-import { Vehicle } from "@/types";
 
 const replace = vi.fn();
 
@@ -23,7 +22,7 @@ vi.mock("next/router", () => ({
   useRouter: () => ({ replace }),
 }));
 
-const vehicles: Array<Vehicle> = [
+const vehicles = [
   {
     id: "5e0562c5-a50b-42ff-83e5-4c004c5b639a",
     manufacturer: "Volkswagen",
@@ -76,10 +75,7 @@ const Wrapper = () => {
 
 it("loads vehicles", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Array<Vehicle>>(
-      "/api/vehicles",
-      (req, res, ctx) => res(ctx.json(vehicles))
-    )
+    rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
   );
   render(<Wrapper />);
   // Loading state
@@ -96,10 +92,7 @@ it("loads vehicles", async () => {
 
 it("handles an error loading the vehicles", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Array<Vehicle>>(
-      "/api/vehicles",
-      (req, res, ctx) => res(ctx.status(500))
-    )
+    rest.get("/api/vehicles", (req, res, ctx) => res(ctx.status(500)))
   );
   render(<Wrapper />);
   expect(
@@ -114,10 +107,7 @@ it("handles an error loading the vehicles", async () => {
 
 it("handles no search results", async () => {
   server.use(
-    rest.get<DefaultBodyType, PathParams, Array<Vehicle>>(
-      "/api/vehicles",
-      (req, res, ctx) => res(ctx.json(vehicles))
-    )
+    rest.get("/api/vehicles", (req, res, ctx) => res(ctx.json(vehicles)))
   );
   render(<Wrapper />);
   await userEvent.type(await screen.findByPlaceholderText(/search/i), "test");

@@ -22,7 +22,7 @@ export default function DetailsPage() {
       onMutate: async (id) => {
         await queryClient.cancelQueries(["vehicles"]);
         // Remove the vehicles immediately
-        const previous = queryClient.getQueryData<Array<Vehicle>>(["vehicles"]);
+        const previous = queryClient.getQueryData<Vehicle[]>(["vehicles"]);
         if (previous) {
           queryClient.setQueryData(
             ["vehicles"],

@@ -1,6 +1,6 @@
 import type { Vehicle } from "@/types";
 
-export const vehicles: Array<Vehicle> = [
+export const vehicles: Vehicle[] = [
   {
     id: "5e0562c5-a50b-42ff-83e5-4c004c5b639a",
     manufacturer: "Volkswagen",
@@ -1203,11 +1203,10 @@ export const vehicles: Array<Vehicle> = [
   },
 ];
 
-function random(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+const random = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min)) + min;
 
-export function randomVehicles(count: number) {
+export const randomVehicles = (count: number) => {
   const indices = [];
   while (indices.length < count) {
     const index = random(0, vehicles.length);
@@ -1216,22 +1215,19 @@ export function randomVehicles(count: number) {
     }
   }
   return indices.map((index) => ({ ...vehicles[index] }));
-}
+};
 
-export function manufacturers() {
-  return [...new Set(vehicles.map(({ manufacturer }) => manufacturer))].sort(
-    (a, b) => a.localeCompare(b)
-  );
-}
-
-export function fuelTypes() {
-  return [...new Set(vehicles.map(({ fuel }) => fuel))].sort((a, b) =>
+export const manufacturers = () =>
+  [...new Set(vehicles.map(({ manufacturer }) => manufacturer))].sort((a, b) =>
     a.localeCompare(b)
   );
-}
 
-export function colors() {
-  return [...new Set(vehicles.map(({ color }) => color))]
+export const fuelTypes = () =>
+  [...new Set(vehicles.map(({ fuel }) => fuel))].sort((a, b) =>
+    a.localeCompare(b)
+  );
+
+export const colors = () =>
+  [...new Set(vehicles.map(({ color }) => color))]
     .filter((color) => color !== "mint green")
     .sort((a, b) => a.localeCompare(b));
-}

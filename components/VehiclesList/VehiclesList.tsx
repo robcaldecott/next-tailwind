@@ -84,7 +84,7 @@ function filterItems(data: Vehicle[], filter: string) {
 }
 
 interface VehiclesListProps {
-  vehicles?: Array<Vehicle>;
+  vehicles?: Vehicle[];
 }
 
 export function VehiclesList({ vehicles = [] }: VehiclesListProps) {
