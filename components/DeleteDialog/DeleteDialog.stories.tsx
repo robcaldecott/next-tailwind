@@ -1,16 +1,13 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { DeleteDialog } from "./DeleteDialog";
 
 export default {
   title: "Components/DeleteDialog",
   component: DeleteDialog,
-} as ComponentMeta<typeof DeleteDialog>;
+} as Meta<typeof DeleteDialog>;
 
-const Template: ComponentStory<typeof DeleteDialog> = (args) => (
-  <DeleteDialog {...args} />
-);
-
-export const Open = Template.bind({});
-Open.args = {
-  open: true,
+export const Open: StoryObj<typeof DeleteDialog> = {
+  args: {
+    open: true,
+  },
 };

@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Details, DetailsLoading } from ".";
 
 export default {
@@ -18,17 +18,14 @@ export default {
       registrationNumber: "TE52 HWW",
     },
   },
-} as ComponentMeta<typeof Details>;
-
-const Template: ComponentStory<typeof Details> = (args) => (
-  <Details {...args} />
-);
-
-export const Data = Template.bind({});
+} as Meta<typeof Details>;
 
 export const Loading = () => <DetailsLoading />;
 
-export const DeleteError = Template.bind({});
-DeleteError.args = {
-  error: new Error("An error has occurred!"),
+export const Data: StoryObj<typeof Details> = {};
+
+export const DeleteError: StoryObj<typeof Details> = {
+  args: {
+    error: new Error("An error has occurred!"),
+  },
 };

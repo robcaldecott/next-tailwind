@@ -1,5 +1,5 @@
 import StarIcon from "@heroicons/react/24/solid/StarIcon";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { ResponsiveFab } from ".";
 
 export default {
@@ -21,13 +21,10 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof ResponsiveFab>;
+} as Meta<typeof ResponsiveFab>;
 
-const Template: ComponentStory<typeof ResponsiveFab> = (args) => (
-  <ResponsiveFab {...args} />
-);
-
-export const Star = Template.bind({});
-Star.args = {
-  label: "Responsive",
+export const Star: StoryObj<typeof ResponsiveFab> = {
+  args: {
+    label: "Responsive",
+  },
 };

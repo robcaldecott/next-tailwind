@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Paper } from "../Paper";
 import { List, ListItem, ListItemLink, ListItemText } from ".";
 
@@ -12,13 +12,14 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof List>;
-
-const Template: ComponentStory<typeof List> = (args) => (
-  <Paper>
-    <List {...args} />
-  </Paper>
-);
+  decorators: [
+    (Story) => (
+      <Paper>
+        <Story />
+      </Paper>
+    ),
+  ],
+} as Meta<typeof List>;
 
 const data = [
   {
@@ -34,32 +35,36 @@ const data = [
   },
 ];
 
-export const Static = Template.bind({});
-Static.args = {
-  children: (
-    <>
-      {data.map(({ primary, secondary }, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={primary} secondary={secondary} />
-        </ListItem>
-      ))}
-    </>
-  ),
-  dividers: true,
-  padding: false,
+type Story = StoryObj<typeof List>;
+
+export const Static: Story = {
+  args: {
+    children: (
+      <>
+        {data.map(({ primary, secondary }, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={primary} secondary={secondary} />
+          </ListItem>
+        ))}
+      </>
+    ),
+    dividers: true,
+    padding: false,
+  },
 };
 
-export const Links = Template.bind({});
-Links.args = {
-  children: (
-    <>
-      {data.map(({ primary, secondary }, index) => (
-        <ListItemLink key={index} href="/">
-          <ListItemText primary={primary} secondary={secondary} />
-        </ListItemLink>
-      ))}
-    </>
-  ),
-  dividers: true,
-  padding: false,
+export const Links: Story = {
+  args: {
+    children: (
+      <>
+        {data.map(({ primary, secondary }, index) => (
+          <ListItemLink key={index} href="/">
+            <ListItemText primary={primary} secondary={secondary} />
+          </ListItemLink>
+        ))}
+      </>
+    ),
+    dividers: true,
+    padding: false,
+  },
 };

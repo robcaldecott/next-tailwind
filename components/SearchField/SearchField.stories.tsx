@@ -1,13 +1,8 @@
-import { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentProps, useState } from "react";
+import { Meta, StoryObj } from "@storybook/react";
 import { SearchField } from ".";
 
-export default {
-  title: "Components/SearchField",
-  component: SearchField,
-} as ComponentMeta<typeof SearchField>;
-
-const Template: ComponentStory<typeof SearchField> = (args) => {
+function Controlled(args: ComponentProps<typeof SearchField>) {
   const [value, setValue] = useState("");
   return (
     <SearchField
@@ -16,10 +11,17 @@ const Template: ComponentStory<typeof SearchField> = (args) => {
       {...args}
     />
   );
-};
+}
 
-export const Default = Template.bind({});
-Default.args = {
-  placeholder: "Filter vehicles",
-  disabled: false,
+export default {
+  title: "Components/SearchField",
+  component: SearchField,
+  render: (args) => <Controlled {...args} />,
+} as Meta<typeof SearchField>;
+
+export const Default: StoryObj<typeof SearchField> = {
+  args: {
+    placeholder: "Filter vehicles",
+    disabled: false,
+  },
 };

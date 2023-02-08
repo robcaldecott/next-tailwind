@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { vehicles } from "@/mocks/vehicles";
 import { FilterProvider } from "@/providers/FilterProvider";
 import { VehiclesList, VehiclesLoading } from ".";
@@ -16,17 +16,16 @@ export default {
       </FilterProvider>
     ),
   ],
-} as ComponentMeta<typeof VehiclesList>;
+} as Meta<typeof VehiclesList>;
 
-const Template: ComponentStory<typeof VehiclesList> = (args) => (
-  <VehiclesList {...args} />
-);
-
-export const Data = Template.bind({});
-
-export const Empty = Template.bind({});
-Empty.args = {
-  vehicles: [],
-};
+type Story = StoryObj<typeof VehiclesList>;
 
 export const Loading = () => <VehiclesLoading />;
+
+export const Data: Story = {};
+
+export const Empty: Story = {
+  args: {
+    vehicles: [],
+  },
+};

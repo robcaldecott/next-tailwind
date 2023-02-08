@@ -1,5 +1,5 @@
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Fab } from "./Fab";
 
 export default {
@@ -8,23 +8,26 @@ export default {
   args: {
     href: "/",
   },
-} as ComponentMeta<typeof Fab>;
+} as Meta<typeof Fab>;
 
-const Template: ComponentStory<typeof Fab> = (args) => <Fab {...args} />;
+type Story = StoryObj<typeof Fab>;
 
-export const Icon = Template.bind({});
-Icon.args = {
-  icon: PlusIcon,
+export const Icon: Story = {
+  args: {
+    icon: PlusIcon,
+  },
 };
 
-export const Label = Template.bind({});
-Label.args = {
-  icon: PlusIcon,
-  label: "Create Vehicle",
+export const Label: Story = {
+  args: {
+    icon: PlusIcon,
+    label: "Create Vehicle",
+  },
 };
 
-export const Fixed = Template.bind({});
-Fixed.args = {
-  className: "fixed bottom-8 right-8",
-  icon: PlusIcon,
+export const Fixed: Story = {
+  args: {
+    className: "fixed bottom-8 right-8",
+    icon: PlusIcon,
+  },
 };

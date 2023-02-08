@@ -1,10 +1,22 @@
-import { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentProps, useState } from "react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Select } from ".";
+
+function Controlled(args: ComponentProps<typeof Select>) {
+  const [value, setValue] = useState(args.value);
+  return (
+    <Select
+      {...args}
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+    />
+  );
+}
 
 export default {
   title: "Components/Select",
   component: Select,
+  render: (args) => <Controlled {...args} />,
   args: {
     children: (
       <>
@@ -29,32 +41,25 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof Select>;
+} as Meta<typeof Select>;
 
-const Template: ComponentStory<typeof Select> = (args) => {
-  const [value, setValue] = useState(args.value);
-  return (
-    <Select
-      {...args}
-      value={value}
-      onChange={(event) => setValue(event.target.value)}
-    />
-  );
+type Story = StoryObj<typeof Select>;
+
+export const Default: Story = {
+  args: {
+    label: "Label",
+    disabled: false,
+    isRequired: false,
+    value: "",
+  },
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  label: "Label",
-  disabled: false,
-  isRequired: false,
-  value: "",
-};
-
-export const Error = Template.bind({});
-Error.args = {
-  label: "Label",
-  disabled: false,
-  isRequired: true,
-  value: "",
-  error: "Please select a fruit",
+export const Error: Story = {
+  args: {
+    label: "Label",
+    disabled: false,
+    isRequired: true,
+    value: "",
+    error: "Please select a fruit",
+  },
 };
